@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ExpedienteClinicoMSF.Models
+{
+    public partial class ExamenesPacientes
+    {
+        public int ExamenPacienteId { get; set; }
+        public int ExamenId { get; set; }
+        public int ConsultaId { get; set; }
+        public DateTime FechaRealizacion { get; set; }
+        public DateTime? FechaLectura { get; set; }
+        public string Lectura { get; set; }
+
+        public ConsultasMedicas Consulta { get; set; }
+        public Examenes Examen { get; set; }
+    }
+}
