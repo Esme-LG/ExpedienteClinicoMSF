@@ -3,13 +3,29 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #f6f6f6;
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
+    margin-top: 25px;
     padding-left: 15px;
     padding-right: 15px;
+    background-color: #ffffff;
+}
+
+nav {
+    background-color: #0094ff;
+}
+
+ul.nav li a, a.navbar-brand{
+    color: #ffffff;
+}
+
+footer{
+    position:absolute;
+    bottom:0;
 }
 
 /* Carousel */
@@ -19,7 +35,7 @@ body {
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+.carousel-inner .item img[src$=".jpg"] {
     width: 100%;
 }
 
