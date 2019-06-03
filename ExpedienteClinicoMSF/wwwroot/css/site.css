@@ -19,7 +19,7 @@ nav {
     background-color: #0094ff;
 }
 
-ul.nav li a, a.navbar-brand{
+ul.nav li a, a.navbar-brand, .navbar-toggle{
     color: #ffffff;
 }
 

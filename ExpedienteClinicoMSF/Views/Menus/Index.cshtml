@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<ExpedienteClinicoMSF.Models.Menus>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Opciones de menú";
 }
 
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Crear opción de menú</a>
 </p>
 <table class="table">
     <thead>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.MenMenu.Direccion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MenuId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MenuId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MenuId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MenuId"><i class="glyphicon glyphicon-pencil"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.MenuId"><i class="glyphicon glyphicon-eye-open"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.MenuId"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
 }

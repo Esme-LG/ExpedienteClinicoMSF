@@ -36,9 +36,8 @@ namespace ExpedienteClinicoMSF
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var connection = @"Server=tcp:expediete-clinico.database.windows.net,1433;Initial Catalog=expediente;Persist Security Info=False;User ID=DBA;Password=D8Xc+Xr|D8t:(0KE;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddDbContext<expedienteContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(Configuration.GetConnectionString("azureDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
