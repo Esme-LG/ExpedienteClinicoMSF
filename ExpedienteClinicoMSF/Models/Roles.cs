@@ -19,6 +19,7 @@ namespace ExpedienteClinicoMSF.Models
         [Display(Name = "Descripción")]
         public string DescripcionRol { get; set; }
 
+        [Display(Name = "Menú")]
         public ICollection<RolesMenus> RolesMenus { get; set; }
         public ICollection<RolesPermisos> RolesPermisos { get; set; }
         public ICollection<Usuarios> Usuarios { get; set; }

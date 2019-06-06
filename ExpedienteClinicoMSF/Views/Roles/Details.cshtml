@@ -22,7 +22,27 @@
         <dd>
             @Html.DisplayFor(model => model.DescripcionRol)
         </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RolesMenus)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Opción</th>
+                </tr>
+                @foreach (var item in Model.RolesMenus)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Menu.Opcion)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
+
 
     
 </div>
