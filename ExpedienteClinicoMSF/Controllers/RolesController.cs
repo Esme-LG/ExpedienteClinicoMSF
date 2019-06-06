@@ -19,9 +19,37 @@ namespace ExpedienteClinicoMSF.Controllers
         }
 
         // GET: Roles
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string cadenaBusqueda)
         {
-            return View(await _context.Roles.ToListAsync());
+            ViewData["ordenarRol"] = String.IsNullOrEmpty(sortOrder) ? "Rol" : "";
+            ViewData["ordenarDescripcion"] = sortOrder == "descripcion_asc" ? "descripcion_desc" : "descripcion_asc";
+            ViewData["filtro"] = cadenaBusqueda;
+
+            var roles = from s in _context.Roles select s;
+
+            if (!String.IsNullOrEmpty(cadenaBusqueda))
+            {
+                roles = roles.Where(s => s.Rol.Contains(cadenaBusqueda) || s.DescripcionRol.Contains(cadenaBusqueda));
+            }
+            
+            switch (sortOrder)
+            {
+                case "nombre_desc":
+                    roles = roles.OrderByDescending(s => s.Rol);
+                    break;
+                case "descripcion_desc":
+                    roles = roles.OrderByDescending(s => s.DescripcionRol);
+                    break;
+                case "descripcion_asc":
+                    roles = roles.OrderBy(s => s.DescripcionRol);
+                    break;
+                default:
+                    roles = roles.OrderBy(s => s.Rol);
+                    break;
+            }
+
+            return View(await roles.AsNoTracking().ToListAsync());
+            //return View(await _context.Roles.ToListAsync());
         }
 
         // GET: Roles/Details/5

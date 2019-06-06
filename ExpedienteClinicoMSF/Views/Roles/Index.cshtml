@@ -9,14 +9,25 @@
 <p>
     <a asp-action="Create">Agregar nuevo rol</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Buscar: <input type="text" name="cadenaBusqueda" value="@ViewData["filtro"]" />
+                    <input type="submit" value="Buscar" class="btn btn-default"/>
+                    <a asp-action="Index">Todos los registros</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Rol)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordenarRol"]">@Html.DisplayNameFor(model => model.Rol)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DescripcionRol)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ordenarDescripcion"]">@Html.DisplayNameFor(model => model.DescripcionRol)</a>
             </th>
             <th></th>
         </tr>
