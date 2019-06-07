@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExpedienteClinicoMSF.Models;
+using ExpedienteClinicoMSF.Models.ExpedienteViewModels;
 
 namespace ExpedienteClinicoMSF.Controllers
 {
@@ -84,7 +85,7 @@ namespace ExpedienteClinicoMSF.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RolId,Rol,DescripcionRol")] Roles roles)
+        public async Task<IActionResult> Create([Bind("RolId,Rol,DescripcionRol,")] Roles roles)
         {
             if (ModelState.IsValid)
             {
@@ -103,12 +104,35 @@ namespace ExpedienteClinicoMSF.Controllers
                 return NotFound();
             }
 
-            var roles = await _context.Roles.FindAsync(id);
-            if (roles == null)
+            var rol = await _context.Roles
+                .Include(i => i.RolesMenus)
+                    .ThenInclude(i => i.Menu)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.RolId == id);
+
+            if (rol == null)
             {
                 return NotFound();
             }
-            return View(roles);
+            RellenarMenusAsignados(rol);
+            return View(rol);
+        }
+
+        private void RellenarMenusAsignados(Roles rol)
+        {
+            var opciones = _context.Menus;
+            var rolMenu = new HashSet<int>(rol.RolesMenus.Select(c => c.MenuId));
+            var viewModel = new List<MenuRolData>();
+            foreach (var opcion in opciones)
+            {
+                viewModel.Add(new MenuRolData
+                {
+                    MenuId = opcion.MenuId,
+                    Opcion = opcion.Opcion,
+                    Asignado = rolMenu.Contains(opcion.MenuId)
+                });
+            }
+            ViewData["Menus"] = viewModel;
         }
 
         // POST: Roles/Edit/5
@@ -116,34 +140,70 @@ namespace ExpedienteClinicoMSF.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RolId,Rol,DescripcionRol")] Roles roles)
+        public async Task<IActionResult> Edit(int? id, string[] opcionesSeleccionadas)
         {
-            if (id != roles.RolId)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var rol = await _context.Roles
+                .Include(i => i.RolesMenus)
+                    .ThenInclude(i=> i.Menu)
+                .FirstOrDefaultAsync(s => s.RolId == id);
+
+            if (await TryUpdateModelAsync<Roles>(rol,"",i => i.Rol, i => i.DescripcionRol))
             {
+                ActualizarRolMenu(opcionesSeleccionadas, rol);
                 try
                 {
-                    _context.Update(roles);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateException /* ex */)
                 {
-                    if (!RolesExists(roles.RolId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    //Log the error (uncomment ex variable name and write a log.)
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists, " +
+                        "see your system administrator.");
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(roles);
+            ActualizarRolMenu(opcionesSeleccionadas, rol);
+            RellenarMenusAsignados(rol);
+            return View(rol);
+        }
+
+        private void ActualizarRolMenu(string[] opcionesSeleccionadas, Roles rol)
+        {
+            Console.WriteLine("Actualizar menu de rol");
+            if (opcionesSeleccionadas == null)
+            {
+                rol.RolesMenus = new List<RolesMenus>();
+                return;
+            }
+
+            var opcionesSeleccionadasHS = new HashSet<string>(opcionesSeleccionadas);
+            var rolMenu = new HashSet<int>
+                (rol.RolesMenus.Select(c => c.Menu.MenuId));
+            foreach (var opcion in _context.Menus)
+            {
+                if (opcionesSeleccionadasHS.Contains(opcion.MenuId.ToString()))
+                {
+                    if (!rolMenu.Contains(opcion.MenuId))
+                    {
+                        rol.RolesMenus.Add(new RolesMenus { RolId = rol.RolId, MenuId = opcion.MenuId });
+                    }
+                }
+                else
+                {
+
+                    if (rolMenu.Contains(opcion.MenuId))
+                    {
+                        RolesMenus opcionAEliminar = rol.RolesMenus.FirstOrDefault(i => i.MenuId == opcion.MenuId);
+                        _context.Remove(opcionAEliminar);
+                    }
+                }
+            }
         }
 
         // GET: Roles/Delete/5
