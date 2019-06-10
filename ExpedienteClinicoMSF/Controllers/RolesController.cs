@@ -77,6 +77,9 @@ namespace ExpedienteClinicoMSF.Controllers
         // GET: Roles/Create
         public IActionResult Create()
         {
+            var rol = new Roles();
+            rol.RolesMenus = new List<RolesMenus>();
+            RellenarMenusAsignados(rol);
             return View();
         }
 
@@ -85,14 +88,24 @@ namespace ExpedienteClinicoMSF.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RolId,Rol,DescripcionRol,")] Roles roles)
+        public async Task<IActionResult> Create([Bind("RolId,Rol,DescripcionRol,")] Roles roles, string[] opcionesSeleccionadas)
         {
+            if (opcionesSeleccionadas != null)
+            {
+                roles.RolesMenus = new List<RolesMenus>();
+                foreach(var opcion in opcionesSeleccionadas)
+                {
+                    var opcionaAgregar = new RolesMenus { RolId = roles.RolId, MenuId = int.Parse(opcion) };
+                    roles.RolesMenus.Add(opcionaAgregar);
+                }
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(roles);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            RellenarMenusAsignados(roles);
             return View(roles);
         }
 
@@ -105,8 +118,7 @@ namespace ExpedienteClinicoMSF.Controllers
             }
 
             var rol = await _context.Roles
-                .Include(i => i.RolesMenus)
-                    .ThenInclude(i => i.Menu)
+                .Include(i => i.RolesMenus).ThenInclude(i => i.Menu)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.RolId == id);
 
@@ -154,6 +166,7 @@ namespace ExpedienteClinicoMSF.Controllers
 
             if (await TryUpdateModelAsync<Roles>(rol,"",i => i.Rol, i => i.DescripcionRol))
             {
+                System.Diagnostics.Debug.WriteLine("TryUpdateModelAsync");
                 ActualizarRolMenu(opcionesSeleccionadas, rol);
                 try
                 {
@@ -175,7 +188,7 @@ namespace ExpedienteClinicoMSF.Controllers
 
         private void ActualizarRolMenu(string[] opcionesSeleccionadas, Roles rol)
         {
-            Console.WriteLine("Actualizar menu de rol");
+            System.Diagnostics.Debug.WriteLine("##### ActualizarRolMenu");
             if (opcionesSeleccionadas == null)
             {
                 rol.RolesMenus = new List<RolesMenus>();
@@ -183,20 +196,20 @@ namespace ExpedienteClinicoMSF.Controllers
             }
 
             var opcionesSeleccionadasHS = new HashSet<string>(opcionesSeleccionadas);
-            var rolMenu = new HashSet<int>
-                (rol.RolesMenus.Select(c => c.Menu.MenuId));
+            var rolMenu = new HashSet<int>(rol.RolesMenus.Select(c => c.Menu.MenuId));
             foreach (var opcion in _context.Menus)
             {
                 if (opcionesSeleccionadasHS.Contains(opcion.MenuId.ToString()))
                 {
+                    System.Diagnostics.Debug.WriteLine(opcion.MenuId);
                     if (!rolMenu.Contains(opcion.MenuId))
                     {
+                        System.Diagnostics.Debug.WriteLine("######## Add");
                         rol.RolesMenus.Add(new RolesMenus { RolId = rol.RolId, MenuId = opcion.MenuId });
                     }
                 }
                 else
                 {
-
                     if (rolMenu.Contains(opcion.MenuId))
                     {
                         RolesMenus opcionAEliminar = rol.RolesMenus.FirstOrDefault(i => i.MenuId == opcion.MenuId);
@@ -230,7 +243,9 @@ namespace ExpedienteClinicoMSF.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var roles = await _context.Roles.FindAsync(id);
+
             _context.Roles.Remove(roles);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
