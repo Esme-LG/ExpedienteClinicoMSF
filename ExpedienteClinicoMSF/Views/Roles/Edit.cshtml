@@ -24,6 +24,7 @@
                 <span asp-validation-for="DescripcionRol" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="RolesMenus" class="control-label"></label>
                 <div class="col-md-offset-2 col-md-10">
                     <table>
                         <tr>
@@ -42,14 +43,14 @@
                                                name="selectedCourses"
                                                value="@opcion.MenuId"
                                                @(Html.Raw(opcion.Asignado ? "checked=\"checked\"" : "")) />
-                                                @opcion.Opcion
+                                        @opcion.Opcion
                                     @:</td>
                                 }
                             @:</tr>
                             }
-                     </table>
-                 </div>
-             </div>
+                        </table>
+                    </div>
+                </div>
              <div class="form-group">
                  <input type="submit" value="Guardar" class="btn btn-default" />
              </div>
