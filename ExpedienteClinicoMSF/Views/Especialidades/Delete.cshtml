@@ -1,0 +1,45 @@
+﻿@model ExpedienteClinicoMSF.Models.Especialidades
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Especialidades</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Especialidad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Especialidad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DescripcionEsp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DescripcionEsp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EsQuirurgica)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EsQuirurgica)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EsMedica)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EsMedica)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EspecialidadId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
