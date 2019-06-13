@@ -23,9 +23,36 @@
                 <span asp-validation-for="DescripcionRol" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-default" />
-            </div>
-        </form>
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                List<ExpedienteClinicoMSF.Models.ExpedienteViewModels.MenuRolData> opciones = ViewBag.Menus;
+
+                                foreach (var opcion in opciones)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedCourses"
+                                               value="@opcion.MenuId"
+                                               @(Html.Raw(opcion.Asignado ? "checked=\"checked\"" : "")) />
+                                        @opcion.Opcion
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-default" />
+                </div>
+            </form>
     </div>
 </div>
 
