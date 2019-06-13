@@ -24,12 +24,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="EsQuirurgica" class="control-label"></label>
-                <input asp-for="EsQuirurgica" class="form-control" />
+                @Html.CheckBox("EsQuirurgica", false)
                 <span asp-validation-for="EsQuirurgica" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EsMedica" class="control-label"></label>
-                <input asp-for="EsMedica" class="form-control" />
+                @Html.CheckBox("EsMedica", false)
                 <span asp-validation-for="EsMedica" class="text-danger"></span>
             </div>
             <div class="form-group">
