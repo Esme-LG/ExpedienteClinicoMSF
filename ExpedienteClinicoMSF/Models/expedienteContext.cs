@@ -43,8 +43,10 @@ namespace ExpedienteClinicoMSF.Models
         public virtual DbSet<Paises> Paises { get; set; }
         public virtual DbSet<Parentescos> Parentescos { get; set; }
         public virtual DbSet<Permisos> Permisos { get; set; }
+        public virtual DbSet<Personas> Personas { get; set; }
         public virtual DbSet<PresentacionesExamenes> PresentacionesExamenes { get; set; }
         public virtual DbSet<Recetas> Recetas { get; set; }
+        public virtual DbSet<Regiones> Regiones { get; set; }
         public virtual DbSet<Responsables> Responsables { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<RolesMenus> RolesMenus { get; set; }
@@ -54,6 +56,7 @@ namespace ExpedienteClinicoMSF.Models
         public virtual DbSet<Telefonos> Telefonos { get; set; }
         public virtual DbSet<TiposMultimedia> TiposMultimedia { get; set; }
         public virtual DbSet<Tratamientos> Tratamientos { get; set; }
+        public virtual DbSet<Ubicaciones> Ubicaciones { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -61,7 +64,7 @@ namespace ExpedienteClinicoMSF.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:expediete-clinico.database.windows.net,1433;Initial Catalog=expediente;Persist Security Info=False;User ID=DBA;Password=D8Xc+Xr|D8t:(0KE;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INN4EME\\SQLEXPRESS;Initial Catalog=expediente;User ID=sa;Password=pringui;");
             }
         }
 
@@ -120,6 +123,9 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("CAMILLAS");
 
+                entity.HasIndex(e => e.SalaId)
+                    .HasName("CUENTA_CON_FK");
+
                 entity.Property(e => e.CamillaId).HasColumnName("CAMILLA_ID");
 
                 entity.Property(e => e.CorrelativoCamilla)
@@ -127,6 +133,16 @@ namespace ExpedienteClinicoMSF.Models
                     .HasColumnName("CORRELATIVO_CAMILLA")
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.EstadoCamilla).HasColumnName("ESTADO_CAMILLA");
+
+                entity.Property(e => e.SalaId).HasColumnName("SALA_ID");
+
+                entity.HasOne(d => d.Sala)
+                    .WithMany(p => p.Camillas)
+                    .HasForeignKey(d => d.SalaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CAMILLAS_CUENTA_CO_SALAS");
             });
 
             modelBuilder.Entity<Categoria>(entity =>
@@ -232,6 +248,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("CODIGOS_CIE10");
 
+                entity.HasIndex(e => e.Cie10)
+                    .HasName("UQ__CODIGOS___A6999B415BFB9329")
+                    .IsUnique();
+
                 entity.Property(e => e.CodigoId).HasColumnName("CODIGO_ID");
 
                 entity.Property(e => e.Cie10)
@@ -280,6 +300,7 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.SignoVitalId).HasColumnName("SIGNO_VITAL_ID");
 
                 entity.Property(e => e.Sintomas)
+                    .IsRequired()
                     .HasColumnName("SINTOMAS")
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -301,6 +322,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.PacienteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CONSULTA_PASA_PACIENTE");
+
+                entity.HasOne(d => d.SignoVital)
+                    .WithMany(p => p.ConsultasMedicas)
+                    .HasForeignKey(d => d.SignoVitalId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CONSULTA_TOMA_SIGNOS_V");
             });
 
             modelBuilder.Entity<Diagnosticos>(entity =>
@@ -367,12 +394,6 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.Ciudad)
                     .IsRequired()
                     .HasColumnName("CIUDAD")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Estado)
-                    .IsRequired()
-                    .HasColumnName("ESTADO")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -561,12 +582,15 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.EstadoCivilId)
                     .HasName("ESTA__FK");
 
-                entity.HasIndex(e => e.ExpEmail)
-                    .HasName("UQ__EXPEDIEN__7CE31F9A124F8892")
-                    .IsUnique();
-
                 entity.HasIndex(e => e.GeneroId)
                     .HasName("ES___FK");
+
+                entity.HasIndex(e => e.NumExpediente)
+                    .HasName("UQ__EXPEDIEN__5E02FDBF6563AD28")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.PacienteId)
+                    .HasName("GUARDA_DATOS_EN_FK");
 
                 entity.Property(e => e.ExpedienteId).HasColumnName("EXPEDIENTE_ID");
 
@@ -574,43 +598,7 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.EstadoCivilId).HasColumnName("ESTADO_CIVIL_ID");
 
-                entity.Property(e => e.ExpApellidoCasada)
-                    .HasColumnName("EXP_APELLIDO_CASADA")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExpApellidoMaterno)
-                    .IsRequired()
-                    .HasColumnName("EXP_APELLIDO_MATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExpApellidoPaterno)
-                    .IsRequired()
-                    .HasColumnName("EXP_APELLIDO_PATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExpEmail)
-                    .IsRequired()
-                    .HasColumnName("EXP_EMAIL")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExpFechaNacimiento)
-                    .HasColumnName("EXP_FECHA_NACIMIENTO")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.ExpPrimerNombre)
-                    .IsRequired()
-                    .HasColumnName("EXP_PRIMER_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExpSegundoNombre)
-                    .HasColumnName("EXP_SEGUNDO_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
+                entity.Property(e => e.ExpEstado).HasColumnName("EXP_ESTADO");
 
                 entity.Property(e => e.FechaCreacion)
                     .HasColumnName("FECHA_CREACION")
@@ -624,6 +612,14 @@ namespace ExpedienteClinicoMSF.Models
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
+                entity.Property(e => e.PacienteId).HasColumnName("PACIENTE_ID");
+
+                entity.HasOne(d => d.Direccion)
+                    .WithMany(p => p.Expedientes)
+                    .HasForeignKey(d => d.DireccionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EXPEDIEN_VIVE_DIRECCIO");
+
                 entity.HasOne(d => d.EstadoCivil)
                     .WithMany(p => p.Expedientes)
                     .HasForeignKey(d => d.EstadoCivilId)
@@ -635,6 +631,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.GeneroId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EXPEDIEN_ES___GENEROS");
+
+                entity.HasOne(d => d.Paciente)
+                    .WithMany(p => p.Expedientes)
+                    .HasForeignKey(d => d.PacienteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EXPEDIEN_GUARDA_DA_PACIENTE");
             });
 
             modelBuilder.Entity<Familiares>(entity =>
@@ -653,6 +655,9 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.ParentescoId)
                     .HasName("ES_FK");
 
+                entity.HasIndex(e => e.PersonaId)
+                    .HasName("_ES_UNA_FK");
+
                 entity.Property(e => e.FamiliarId).HasColumnName("FAMILIAR_ID");
 
                 entity.Property(e => e.CausaMuerte)
@@ -662,38 +667,6 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.DireccionId).HasColumnName("DIRECCION_ID");
 
-                entity.Property(e => e.FamApellidoCasada)
-                    .HasColumnName("FAM_APELLIDO_CASADA")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FamApellidoMaterno)
-                    .IsRequired()
-                    .HasColumnName("FAM_APELLIDO_MATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FamApellidoPaterno)
-                    .IsRequired()
-                    .HasColumnName("FAM_APELLIDO_PATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FamFechaNacimiento)
-                    .HasColumnName("FAM_FECHA_NACIMIENTO")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.FamPrimerNombre)
-                    .IsRequired()
-                    .HasColumnName("FAM_PRIMER_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FamSegundoNombre)
-                    .HasColumnName("FAM_SEGUNDO_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.FechaMuerte)
                     .HasColumnName("FECHA_MUERTE")
                     .HasColumnType("datetime");
@@ -701,6 +674,8 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.GeneroId).HasColumnName("GENERO_ID");
 
                 entity.Property(e => e.ParentescoId).HasColumnName("PARENTESCO_ID");
+
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
 
                 entity.HasOne(d => d.Direccion)
                     .WithMany(p => p.Familiares)
@@ -719,6 +694,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.ParentescoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FAMILIAR_ES_PARENTES");
+
+                entity.HasOne(d => d.Persona)
+                    .WithMany(p => p.Familiares)
+                    .HasForeignKey(d => d.PersonaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FAMILIAR__ES_UNA_PERSONAS");
             });
 
             modelBuilder.Entity<Generos>(entity =>
@@ -818,6 +799,12 @@ namespace ExpedienteClinicoMSF.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_HOSPITAL_REPOSA_EN_CAMILLAS");
 
+                entity.HasOne(d => d.CirugiaPaciente)
+                    .WithMany(p => p.Hospitalizaciones)
+                    .HasForeignKey(d => d.CirugiaPacienteId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_HOSPITAL_PARA_CIRUGIAS");
+
                 entity.HasOne(d => d.SalaNavigation)
                     .WithMany(p => p.Hospitalizaciones)
                     .HasForeignKey(d => d.SalaId)
@@ -827,13 +814,15 @@ namespace ExpedienteClinicoMSF.Models
 
             modelBuilder.Entity<Logs>(entity =>
             {
-                entity.HasKey(e => new { e.UsuarioId, e.LogId })
+                entity.HasKey(e => new { e.PersonaId, e.UsuarioId, e.LogId })
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("LOGS");
 
-                entity.HasIndex(e => e.UsuarioId)
+                entity.HasIndex(e => new { e.PersonaId, e.UsuarioId })
                     .HasName("REGISTRA_FK");
+
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
 
                 entity.Property(e => e.UsuarioId).HasColumnName("USUARIO_ID");
 
@@ -857,9 +846,9 @@ namespace ExpedienteClinicoMSF.Models
                     .HasColumnName("FECHA_ACCION")
                     .HasColumnType("datetime");
 
-                entity.HasOne(d => d.Usuario)
+                entity.HasOne(d => d.Usuarios)
                     .WithMany(p => p.Logs)
-                    .HasForeignKey(d => d.UsuarioId)
+                    .HasForeignKey(d => new { d.PersonaId, d.UsuarioId })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_LOGS_REGISTRA_USUARIOS");
             });
@@ -878,6 +867,8 @@ namespace ExpedienteClinicoMSF.Models
                     .HasColumnName("MEDICAMENTO")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Stock).HasColumnName("STOCK");
             });
 
             modelBuilder.Entity<Medicos>(entity =>
@@ -892,6 +883,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.HospitalId)
                     .HasName("TIENE__FK");
+
+                entity.HasIndex(e => e.NumMedico)
+                    .HasName("UQ__MEDICOS__B1D83B47FB1FA53B")
+                    .IsUnique();
 
                 entity.Property(e => e.MedicoId).HasColumnName("MEDICO_ID");
 
@@ -990,12 +985,28 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("PACIENTES");
 
-                entity.HasIndex(e => e.ExpedienteId)
-                    .HasName("GUARDA_DATOS_EN_FK");
+                entity.HasIndex(e => e.PacienteEmail)
+                    .HasName("UQ__PACIENTE__B3D5C67BE824B116")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.PersonaId)
+                    .HasName("ES_UNA__FK");
 
                 entity.Property(e => e.PacienteId).HasColumnName("PACIENTE_ID");
 
-                entity.Property(e => e.ExpedienteId).HasColumnName("EXPEDIENTE_ID");
+                entity.Property(e => e.PacienteEmail)
+                    .IsRequired()
+                    .HasColumnName("PACIENTE_EMAIL")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
+
+                entity.HasOne(d => d.Persona)
+                    .WithMany(p => p.Pacientes)
+                    .HasForeignKey(d => d.PersonaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PACIENTE_ES_UNA__PERSONAS");
             });
 
             modelBuilder.Entity<Paises>(entity =>
@@ -1046,6 +1057,90 @@ namespace ExpedienteClinicoMSF.Models
                     .HasColumnName("PERMISO")
                     .HasMaxLength(50)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Personas>(entity =>
+            {
+                entity.HasKey(e => e.PersonaId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("PERSONAS");
+
+                entity.HasIndex(e => e.FamiliarId)
+                    .HasName("_ES_UNA2_FK");
+
+                entity.HasIndex(e => e.PacienteId)
+                    .HasName("ES_UNA_2_FK");
+
+                entity.HasIndex(e => e.ResponsableId)
+                    .HasName("_ES_UNA_2_FK");
+
+                entity.HasIndex(e => new { e.PersonaId, e.UsuarioId })
+                    .HasName("ES_UNA2_FK");
+
+                entity.Property(e => e.PersonaId)
+                    .HasColumnName("PERSONA_ID")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ApellidoCasada)
+                    .HasColumnName("APELLIDO_CASADA")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApellidoMaterno)
+                    .IsRequired()
+                    .HasColumnName("APELLIDO_MATERNO")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ApellidoPaterno)
+                    .IsRequired()
+                    .HasColumnName("APELLIDO_PATERNO")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FamiliarId).HasColumnName("FAMILIAR_ID");
+
+                entity.Property(e => e.FechaNacimiento)
+                    .HasColumnName("FECHA_NACIMIENTO")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.PacienteId).HasColumnName("PACIENTE_ID");
+
+                entity.Property(e => e.PrimerNombre)
+                    .IsRequired()
+                    .HasColumnName("PRIMER_NOMBRE")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ResponsableId).HasColumnName("RESPONSABLE_ID");
+
+                entity.Property(e => e.SegundoNombre)
+                    .HasColumnName("SEGUNDO_NOMBRE")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsuarioId).HasColumnName("USUARIO_ID");
+
+                entity.HasOne(d => d.Familiar)
+                    .WithMany(p => p.Personas)
+                    .HasForeignKey(d => d.FamiliarId)
+                    .HasConstraintName("FK_PERSONAS__ES_UNA2_FAMILIAR");
+
+                entity.HasOne(d => d.Paciente)
+                    .WithMany(p => p.Personas)
+                    .HasForeignKey(d => d.PacienteId)
+                    .HasConstraintName("FK_PERSONAS_ES_UNA_2_PACIENTE");
+
+                entity.HasOne(d => d.Responsable)
+                    .WithMany(p => p.Personas)
+                    .HasForeignKey(d => d.ResponsableId)
+                    .HasConstraintName("FK_PERSONAS__ES_UNA_2_RESPONSA");
+
+                entity.HasOne(d => d.Usuarios)
+                    .WithMany(p => p.Personas)
+                    .HasForeignKey(d => new { d.PersonaId, d.UsuarioId })
+                    .HasConstraintName("FK_PERSONAS_ES_UNA2_USUARIOS");
             });
 
             modelBuilder.Entity<PresentacionesExamenes>(entity =>
@@ -1108,6 +1203,32 @@ namespace ExpedienteClinicoMSF.Models
                     .HasConstraintName("FK_RECETAS_CON2_TRATAMIE");
             });
 
+            modelBuilder.Entity<Regiones>(entity =>
+            {
+                entity.HasKey(e => e.RegionId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("REGIONES");
+
+                entity.HasIndex(e => e.RegRegionId)
+                    .HasName("UBICADA_FK");
+
+                entity.Property(e => e.RegionId).HasColumnName("REGION_ID");
+
+                entity.Property(e => e.RegRegionId).HasColumnName("REG_REGION_ID");
+
+                entity.Property(e => e.Region)
+                    .IsRequired()
+                    .HasColumnName("REGION")
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.RegRegion)
+                    .WithMany(p => p.InverseRegRegion)
+                    .HasForeignKey(d => d.RegRegionId)
+                    .HasConstraintName("FK_REGIONES_UBICADA_REGIONES");
+            });
+
             modelBuilder.Entity<Responsables>(entity =>
             {
                 entity.HasKey(e => e.ResponsableId)
@@ -1118,45 +1239,18 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.ExpedienteId)
                     .HasName("DE_FK");
 
+                entity.HasIndex(e => e.PersonaId)
+                    .HasName("_ES_UNA__FK");
+
                 entity.Property(e => e.ResponsableId).HasColumnName("RESPONSABLE_ID");
 
                 entity.Property(e => e.ExpedienteId).HasColumnName("EXPEDIENTE_ID");
 
-                entity.Property(e => e.FechaNacimientoResp)
-                    .HasColumnName("FECHA_NACIMIENTO_RESP")
-                    .HasColumnType("datetime");
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
 
                 entity.Property(e => e.Relacion)
                     .HasColumnName("RELACION")
                     .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RespApellidoCasada)
-                    .HasColumnName("RESP_APELLIDO_CASADA")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RespApellidoMaterno)
-                    .IsRequired()
-                    .HasColumnName("RESP_APELLIDO_MATERNO")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RespApellidoPaterno)
-                    .IsRequired()
-                    .HasColumnName("RESP_APELLIDO_PATERNO")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RespPrimerNombre)
-                    .IsRequired()
-                    .HasColumnName("RESP_PRIMER_NOMBRE")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RespSegundoNombre)
-                    .HasColumnName("RESP_SEGUNDO_NOMBRE")
-                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Expediente)
@@ -1164,6 +1258,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.ExpedienteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_RESPONSA_DE_EXPEDIEN");
+
+                entity.HasOne(d => d.Persona)
+                    .WithMany(p => p.Responsables)
+                    .HasForeignKey(d => d.PersonaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RESPONSA__ES_UNA__PERSONAS");
             });
 
             modelBuilder.Entity<Roles>(entity =>
@@ -1257,6 +1357,8 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.SalaId).HasColumnName("SALA_ID");
 
+                entity.Property(e => e.EstadoSala).HasColumnName("ESTADO_SALA");
+
                 entity.Property(e => e.NombreSala)
                     .IsRequired()
                     .HasColumnName("NOMBRE_SALA")
@@ -1310,7 +1412,7 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.ResponsableId)
                     .HasName("_ES_DUENO_DE__FK");
 
-                entity.HasIndex(e => e.UsuarioId)
+                entity.HasIndex(e => new { e.PersonaId, e.UsuarioId })
                     .HasName("ES_DUENO_DE_FK");
 
                 entity.Property(e => e.TelefonoId).HasColumnName("TELEFONO_ID");
@@ -1322,6 +1424,8 @@ namespace ExpedienteClinicoMSF.Models
                     .HasColumnName("NUMERO")
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
 
                 entity.Property(e => e.ResponsableId).HasColumnName("RESPONSABLE_ID");
 
@@ -1337,9 +1441,9 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.ResponsableId)
                     .HasConstraintName("FK_TELEFONO__ES_DUENO_RESPONSA");
 
-                entity.HasOne(d => d.Usuario)
+                entity.HasOne(d => d.Usuarios)
                     .WithMany(p => p.Telefonos)
-                    .HasForeignKey(d => d.UsuarioId)
+                    .HasForeignKey(d => new { d.PersonaId, d.UsuarioId })
                     .HasConstraintName("FK_TELEFONO_ES_DUENO__USUARIOS");
             });
 
@@ -1398,9 +1502,39 @@ namespace ExpedienteClinicoMSF.Models
                     .HasConstraintName("FK_TRATAMIE_RECETA_CONSULTA");
             });
 
+            modelBuilder.Entity<Ubicaciones>(entity =>
+            {
+                entity.HasKey(e => new { e.RegionId, e.DireccionId })
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("UBICACIONES");
+
+                entity.HasIndex(e => e.DireccionId)
+                    .HasName("UBICADA_EN2_FK");
+
+                entity.HasIndex(e => e.RegionId)
+                    .HasName("UBICADA_EN_FK");
+
+                entity.Property(e => e.RegionId).HasColumnName("REGION_ID");
+
+                entity.Property(e => e.DireccionId).HasColumnName("DIRECCION_ID");
+
+                entity.HasOne(d => d.Direccion)
+                    .WithMany(p => p.Ubicaciones)
+                    .HasForeignKey(d => d.DireccionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UBICACIO_UBICADA_E_DIRECCIO");
+
+                entity.HasOne(d => d.Region)
+                    .WithMany(p => p.Ubicaciones)
+                    .HasForeignKey(d => d.RegionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UBICACIO_UBICADA_E_REGIONES");
+            });
+
             modelBuilder.Entity<Usuarios>(entity =>
             {
-                entity.HasKey(e => e.UsuarioId)
+                entity.HasKey(e => new { e.PersonaId, e.UsuarioId })
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("USUARIOS");
@@ -1409,7 +1543,7 @@ namespace ExpedienteClinicoMSF.Models
                     .HasName("VIVE_EN__FK");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__USUARIOS__161CF72408CBF1A6")
+                    .HasName("UQ__USUARIOS__161CF72489DD7D91")
                     .IsUnique();
 
                 entity.HasIndex(e => e.EstadoCivilId)
@@ -1421,29 +1555,19 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.HospitalId)
                     .HasName("PERTENECE_A_FK");
 
+                entity.HasIndex(e => e.PersonaId)
+                    .HasName("ES_UNA_FK");
+
                 entity.HasIndex(e => e.RolId)
                     .HasName("TIENE_FK");
 
-                entity.Property(e => e.UsuarioId).HasColumnName("USUARIO_ID");
+                entity.Property(e => e.PersonaId).HasColumnName("PERSONA_ID");
+
+                entity.Property(e => e.UsuarioId)
+                    .HasColumnName("USUARIO_ID")
+                    .ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Activo).HasColumnName("ACTIVO");
-
-                entity.Property(e => e.ApellidoCasada)
-                    .HasColumnName("APELLIDO_CASADA")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApellidoMaterno)
-                    .IsRequired()
-                    .HasColumnName("APELLIDO_MATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ApellidoPaterno)
-                    .IsRequired()
-                    .HasColumnName("APELLIDO_PATERNO")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Bloqueado).HasColumnName("BLOQUEADO");
 
@@ -1456,10 +1580,6 @@ namespace ExpedienteClinicoMSF.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.EstadoCivilId).HasColumnName("ESTADO_CIVIL_ID");
-
-                entity.Property(e => e.FechaNacimiento)
-                    .HasColumnName("FECHA_NACIMIENTO")
-                    .HasColumnType("datetime");
 
                 entity.Property(e => e.FechaRegistro)
                     .HasColumnName("FECHA_REGISTRO")
@@ -1477,18 +1597,7 @@ namespace ExpedienteClinicoMSF.Models
                     .HasMaxLength(25)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PrimerNombre)
-                    .IsRequired()
-                    .HasColumnName("PRIMER_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.RolId).HasColumnName("ROL_ID");
-
-                entity.Property(e => e.SegundoNombre)
-                    .HasColumnName("SEGUNDO_NOMBRE")
-                    .HasMaxLength(25)
-                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Direccion)
                     .WithMany(p => p.Usuarios)
@@ -1511,7 +1620,14 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasOne(d => d.Hospital)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.HospitalId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_USUARIOS_PERTENECE_HOSPITAL");
+
+                entity.HasOne(d => d.Persona)
+                    .WithMany(p => p.UsuariosNavigation)
+                    .HasForeignKey(d => d.PersonaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_USUARIOS_ES_UNA_PERSONAS");
 
                 entity.HasOne(d => d.Rol)
                     .WithMany(p => p.Usuarios)

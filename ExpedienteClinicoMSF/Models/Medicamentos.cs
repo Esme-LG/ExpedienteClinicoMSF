@@ -12,6 +12,7 @@ namespace ExpedienteClinicoMSF.Models
 
         public int MedicamentosId { get; set; }
         public string Medicamento { get; set; }
+        public int Stock { get; set; }
 
         public ICollection<Recetas> Recetas { get; set; }
     }

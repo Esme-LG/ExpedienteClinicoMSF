@@ -16,6 +16,7 @@ namespace ExpedienteClinicoMSF.Models
         public DateTime? FechaAlta { get; set; }
 
         public Camillas Camilla { get; set; }
+        public CirugiasPacientes CirugiaPaciente { get; set; }
         public Salas SalaNavigation { get; set; }
     }
 }
