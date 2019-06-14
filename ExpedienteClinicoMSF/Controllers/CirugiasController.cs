@@ -47,7 +47,7 @@ namespace ExpedienteClinicoMSF.Controllers
         // GET: Cirugias/Create
         public IActionResult Create()
         {
-            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades, "EspecialidadId", "DescripcionEsp");
+            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades.Where(x => x.EsQuirurgica).ToList(), "EspecialidadId", "Especialidad");
             return View();
         }
 
@@ -81,7 +81,7 @@ namespace ExpedienteClinicoMSF.Controllers
             {
                 return NotFound();
             }
-            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades, "EspecialidadId", "DescripcionEsp", cirugias.EspecialidadId);
+            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades.Where(x => x.EsQuirurgica), "EspecialidadId", "Especialidad", cirugias.EspecialidadId);
             return View(cirugias);
         }
 
@@ -117,7 +117,7 @@ namespace ExpedienteClinicoMSF.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades, "EspecialidadId", "DescripcionEsp", cirugias.EspecialidadId);
+            ViewData["EspecialidadId"] = new SelectList(_context.Especialidades, "EspecialidadId", "Especialidad", cirugias.EspecialidadId);
             return View(cirugias);
         }
 
