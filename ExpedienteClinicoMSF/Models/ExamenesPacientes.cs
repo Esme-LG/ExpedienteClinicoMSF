@@ -5,6 +5,11 @@ namespace ExpedienteClinicoMSF.Models
 {
     public partial class ExamenesPacientes
     {
+        public ExamenesPacientes()
+        {
+            Multimedias = new HashSet<Multimedias>();
+        }
+
         public int ExamenPacienteId { get; set; }
         public int ExamenId { get; set; }
         public int ConsultaId { get; set; }
@@ -14,5 +19,6 @@ namespace ExpedienteClinicoMSF.Models
 
         public ConsultasMedicas Consulta { get; set; }
         public Examenes Examen { get; set; }
+        public ICollection<Multimedias> Multimedias { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace ExpedienteClinicoMSF.Models
         public string Email { get; set; }
         public string Pass { get; set; }
         public bool Activo { get; set; }
-        public bool Bloqueado { get; set; }
+        public bool? Bloqueado { get; set; }
         public short Intentos { get; set; }
         public DateTime FechaRegistro { get; set; }
 

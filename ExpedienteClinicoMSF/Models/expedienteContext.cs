@@ -27,6 +27,7 @@ namespace ExpedienteClinicoMSF.Models
         public virtual DbSet<Especialidades> Especialidades { get; set; }
         public virtual DbSet<EstadosCiviles> EstadosCiviles { get; set; }
         public virtual DbSet<Examenes> Examenes { get; set; }
+        public virtual DbSet<ExamenesMultimedias> ExamenesMultimedias { get; set; }
         public virtual DbSet<ExamenesPacientes> ExamenesPacientes { get; set; }
         public virtual DbSet<ExamenesResultados> ExamenesResultados { get; set; }
         public virtual DbSet<Expedientes> Expedientes { get; set; }
@@ -44,7 +45,6 @@ namespace ExpedienteClinicoMSF.Models
         public virtual DbSet<Parentescos> Parentescos { get; set; }
         public virtual DbSet<Permisos> Permisos { get; set; }
         public virtual DbSet<Personas> Personas { get; set; }
-        public virtual DbSet<PresentacionesExamenes> PresentacionesExamenes { get; set; }
         public virtual DbSet<Recetas> Recetas { get; set; }
         public virtual DbSet<Regiones> Regiones { get; set; }
         public virtual DbSet<Responsables> Responsables { get; set; }
@@ -64,7 +64,7 @@ namespace ExpedienteClinicoMSF.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INN4EME\\SQLEXPRESS;Initial Catalog=expediente;User ID=sa;Password=pringui;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INN4EME\\SQLEXPRESS;Initial Catalog=expediente;Integrated Security=True;");
             }
         }
 
@@ -247,10 +247,6 @@ namespace ExpedienteClinicoMSF.Models
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("CODIGOS_CIE10");
-
-                entity.HasIndex(e => e.Cie10)
-                    .HasName("UQ__CODIGOS___A6999B415BFB9329")
-                    .IsUnique();
 
                 entity.Property(e => e.CodigoId).HasColumnName("CODIGO_ID");
 
@@ -483,6 +479,36 @@ namespace ExpedienteClinicoMSF.Models
                     .HasConstraintName("FK_EXAMENES_ES_DE_TIP_CATEGORI");
             });
 
+            modelBuilder.Entity<ExamenesMultimedias>(entity =>
+            {
+                entity.HasKey(e => new { e.TipoMultimediaId, e.ExamenId })
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("EXAMENES_MULTIMEDIAS");
+
+                entity.HasIndex(e => e.ExamenId)
+                    .HasName("ES_DE2_FK");
+
+                entity.HasIndex(e => e.TipoMultimediaId)
+                    .HasName("ES_DE_FK");
+
+                entity.Property(e => e.TipoMultimediaId).HasColumnName("TIPO_MULTIMEDIA_ID");
+
+                entity.Property(e => e.ExamenId).HasColumnName("EXAMEN_ID");
+
+                entity.HasOne(d => d.Examen)
+                    .WithMany(p => p.ExamenesMultimedias)
+                    .HasForeignKey(d => d.ExamenId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EXAMENES_ES_DE2_EXAMENES");
+
+                entity.HasOne(d => d.TipoMultimedia)
+                    .WithMany(p => p.ExamenesMultimedias)
+                    .HasForeignKey(d => d.TipoMultimediaId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_EXAMENES_ES_DE_TIPOS_MU");
+            });
+
             modelBuilder.Entity<ExamenesPacientes>(entity =>
             {
                 entity.HasKey(e => e.ExamenPacienteId)
@@ -584,10 +610,6 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.GeneroId)
                     .HasName("ES___FK");
-
-                entity.HasIndex(e => e.NumExpediente)
-                    .HasName("UQ__EXPEDIEN__5E02FDBF6563AD28")
-                    .IsUnique();
 
                 entity.HasIndex(e => e.PacienteId)
                     .HasName("GUARDA_DATOS_EN_FK");
@@ -884,10 +906,6 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.HospitalId)
                     .HasName("TIENE__FK");
 
-                entity.HasIndex(e => e.NumMedico)
-                    .HasName("UQ__MEDICOS__B1D83B47FB1FA53B")
-                    .IsUnique();
-
                 entity.Property(e => e.MedicoId).HasColumnName("MEDICO_ID");
 
                 entity.Property(e => e.EspecialidadId).HasColumnName("ESPECIALIDAD_ID");
@@ -952,6 +970,9 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("MULTIMEDIAS");
 
+                entity.HasIndex(e => e.ExamenPacienteId)
+                    .HasName("REGISTRA__FK");
+
                 entity.HasIndex(e => e.TipoMultimediaId)
                     .HasName("ES__FK");
 
@@ -963,6 +984,8 @@ namespace ExpedienteClinicoMSF.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ExamenPacienteId).HasColumnName("EXAMEN_PACIENTE_ID");
+
                 entity.Property(e => e.Formato)
                     .IsRequired()
                     .HasColumnName("FORMATO")
@@ -970,6 +993,11 @@ namespace ExpedienteClinicoMSF.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.TipoMultimediaId).HasColumnName("TIPO_MULTIMEDIA_ID");
+
+                entity.HasOne(d => d.ExamenPaciente)
+                    .WithMany(p => p.Multimedias)
+                    .HasForeignKey(d => d.ExamenPacienteId)
+                    .HasConstraintName("FK_MULTIMED_REGISTRA__EXAMENES");
 
                 entity.HasOne(d => d.TipoMultimedia)
                     .WithMany(p => p.Multimedias)
@@ -984,10 +1012,6 @@ namespace ExpedienteClinicoMSF.Models
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("PACIENTES");
-
-                entity.HasIndex(e => e.PacienteEmail)
-                    .HasName("UQ__PACIENTE__B3D5C67BE824B116")
-                    .IsUnique();
 
                 entity.HasIndex(e => e.PersonaId)
                     .HasName("ES_UNA__FK");
@@ -1116,6 +1140,7 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.ResponsableId).HasColumnName("RESPONSABLE_ID");
 
                 entity.Property(e => e.SegundoNombre)
+                    .IsRequired()
                     .HasColumnName("SEGUNDO_NOMBRE")
                     .HasMaxLength(25)
                     .IsUnicode(false);
@@ -1141,36 +1166,6 @@ namespace ExpedienteClinicoMSF.Models
                     .WithMany(p => p.Personas)
                     .HasForeignKey(d => new { d.PersonaId, d.UsuarioId })
                     .HasConstraintName("FK_PERSONAS_ES_UNA2_USUARIOS");
-            });
-
-            modelBuilder.Entity<PresentacionesExamenes>(entity =>
-            {
-                entity.HasKey(e => new { e.MultimediaId, e.ExamenId })
-                    .ForSqlServerIsClustered(false);
-
-                entity.ToTable("PRESENTACIONES_EXAMENES");
-
-                entity.HasIndex(e => e.ExamenId)
-                    .HasName("SE_PRESENTA2_FK");
-
-                entity.HasIndex(e => e.MultimediaId)
-                    .HasName("SE_PRESENTA_FK");
-
-                entity.Property(e => e.MultimediaId).HasColumnName("MULTIMEDIA_ID");
-
-                entity.Property(e => e.ExamenId).HasColumnName("EXAMEN_ID");
-
-                entity.HasOne(d => d.Examen)
-                    .WithMany(p => p.PresentacionesExamenes)
-                    .HasForeignKey(d => d.ExamenId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRESENTA_SE_PRESEN_EXAMENES");
-
-                entity.HasOne(d => d.Multimedia)
-                    .WithMany(p => p.PresentacionesExamenes)
-                    .HasForeignKey(d => d.MultimediaId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PRESENTA_SE_PRESEN_MULTIMED");
             });
 
             modelBuilder.Entity<Recetas>(entity =>
@@ -1541,10 +1536,6 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.DireccionId)
                     .HasName("VIVE_EN__FK");
-
-                entity.HasIndex(e => e.Email)
-                    .HasName("UQ__USUARIOS__161CF72489DD7D91")
-                    .IsUnique();
 
                 entity.HasIndex(e => e.EstadoCivilId)
                     .HasName("ESTA_FK");
