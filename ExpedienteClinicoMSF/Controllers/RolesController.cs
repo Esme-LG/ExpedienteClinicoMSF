@@ -182,7 +182,7 @@ namespace ExpedienteClinicoMSF.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, string[] opcionesSeleccionadas, string[] permisosSeleccionados)
+        public async Task<IActionResult> Edit(int? id, string[] selectedMenus, string[] selectedPermisos)
         {
             if (id == null)
             {
@@ -191,14 +191,15 @@ namespace ExpedienteClinicoMSF.Controllers
 
             var rol = await _context.Roles
                 .Include(i => i.RolesMenus)
-                    .ThenInclude(i=> i.Menu).Include(p => p.RolesPermisos)
-                    .ThenInclude(p => p.Permiso)
-                .FirstOrDefaultAsync(s => s.RolId == id);        
+                    .ThenInclude(i=> i.Menu).Include(i => i.RolesPermisos)
+                    .ThenInclude(i => i.Permiso)
+                .FirstOrDefaultAsync(i => i.RolId == id);        
 
             if (await TryUpdateModelAsync<Roles>(rol,"",i => i.Rol, i => i.DescripcionRol))
             {
                 System.Diagnostics.Debug.WriteLine("TryUpdateModelAsync");
-                ActualizarRolMenu(opcionesSeleccionadas, rol);
+                ActualizarRolMenu(selectedMenus, rol);
+                ActualizarRolPermiso(selectedPermisos, rol);
                 try
                 {
                     await _context.SaveChangesAsync();
@@ -212,22 +213,23 @@ namespace ExpedienteClinicoMSF.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ActualizarRolMenu(opcionesSeleccionadas, rol);
+            ActualizarRolMenu(selectedMenus, rol);
+            ActualizarRolPermiso(selectedPermisos, rol);
             RellenarMenusAsignados(rol);
             RellenarPermisosAsignados(rol);
             return View(rol);
         }
 
-        private void ActualizarRolMenu(string[] opcionesSeleccionadas, Roles rol)
+        private void ActualizarRolMenu(string[] selectedMenus, Roles rol)
         {
             System.Diagnostics.Debug.WriteLine("##### ActualizarRolMenu");
-            if (opcionesSeleccionadas == null)
+            if (selectedMenus == null)
             {
                 rol.RolesMenus = new List<RolesMenus>();
                 return;
             }
 
-            var opcionesSeleccionadasHS = new HashSet<string>(opcionesSeleccionadas);
+            var opcionesSeleccionadasHS = new HashSet<string>(selectedMenus);
             var rolMenu = new HashSet<int>(rol.RolesMenus.Select(c => c.Menu.MenuId));
             foreach (var opcion in _context.Menus)
             {
@@ -245,6 +247,39 @@ namespace ExpedienteClinicoMSF.Controllers
                     if (rolMenu.Contains(opcion.MenuId))
                     {
                         RolesMenus opcionAEliminar = rol.RolesMenus.FirstOrDefault(i => i.MenuId == opcion.MenuId);
+                        _context.Remove(opcionAEliminar);
+                    }
+                }
+            }
+        }
+
+        private void ActualizarRolPermiso(string[] selectedPermisos, Roles rol)
+        {
+            System.Diagnostics.Debug.WriteLine("##### ActualizarRolPermiso");
+            if (selectedPermisos == null)
+            {
+                rol.RolesPermisos = new List<RolesPermisos>();
+                return;
+            }
+
+            var opcionesSeleccionadasHS = new HashSet<string>(selectedPermisos);
+            var rolPermiso = new HashSet<int>(rol.RolesPermisos.Select(c => c.Permiso.PermisoId));
+            foreach (var option in _context.Permisos)
+            {
+                if (opcionesSeleccionadasHS.Contains(option.PermisoId.ToString()))
+                {
+                    System.Diagnostics.Debug.WriteLine(option.PermisoId);
+                    if (!rolPermiso.Contains(option.PermisoId))
+                    {
+                        System.Diagnostics.Debug.WriteLine("######## Add");
+                        rol.RolesPermisos.Add(new RolesPermisos { RolId = rol.RolId, PermisoId = option.PermisoId });
+                    }
+                }
+                else
+                {
+                    if (rolPermiso.Contains(option.PermisoId))
+                    {
+                        RolesPermisos opcionAEliminar = rol.RolesPermisos.FirstOrDefault(i => i.PermisoId == option.PermisoId);
                         _context.Remove(opcionAEliminar);
                     }
                 }
