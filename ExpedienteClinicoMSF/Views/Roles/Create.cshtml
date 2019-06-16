@@ -23,6 +23,7 @@
                 <span asp-validation-for="DescripcionRol" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Asignar Menus</label>
                 <div class="col-md-offset-2 col-md-10">
                     <table>
                         <tr>
@@ -38,7 +39,7 @@
                                     }
                                     @:<td>
                                         <input type="checkbox"
-                                               name="selectedCourses"
+                                               name="selectedMenu"
                                                value="@opcion.MenuId"
                                                @(Html.Raw(opcion.Asignado ? "checked=\"checked\"" : "")) />
                                         @opcion.Opcion
@@ -49,10 +50,38 @@
                         </table>
                     </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Crear" class="btn btn-default" />
+            <div class="form-group">
+                <label class="control-label">Asignar Permisos</label>
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                int ct = 0;
+                                List<ExpedienteClinicoMSF.Models.ExpedienteViewModels.PermisoRolData> opcioness = ViewBag.Permisos;
+
+                                foreach (var option in opcioness)
+                                {
+                                    if (ct++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedPermiso"
+                                               value="@option.PermisoId"
+                                               @(Html.Raw(option.Asignado ? "checked=\"checked\"" : "")) />
+                                        @option.Option
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
                 </div>
-            </form>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-default" />
+                    </div>
+                </form>
     </div>
 </div>
 

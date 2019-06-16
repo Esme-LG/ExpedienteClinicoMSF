@@ -45,6 +45,8 @@ namespace ExpedienteClinicoMSF.Controllers
         // GET: Permisos/Create
         public IActionResult Create()
         {
+            var permiso = new Permisos();
+            permiso.RolesPermisos = new List<RolesPermisos>();
             return View();
         }
 
