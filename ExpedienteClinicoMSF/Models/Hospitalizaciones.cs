@@ -13,9 +13,10 @@ namespace ExpedienteClinicoMSF.Models
         public short NumeroCamilla { get; set; }
         public DateTime FechaIngreso { get; set; }
         public DateTime FechaAltaAprox { get; set; }
-        public DateTime? FechaAlta { get; set; }
+        public DateTime FechaAlta { get; set; }
 
         public Camillas Camilla { get; set; }
+        public CirugiasPacientes CirugiaPaciente { get; set; }
         public Salas SalaNavigation { get; set; }
     }
 }

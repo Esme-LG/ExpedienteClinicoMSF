@@ -7,9 +7,9 @@ namespace ExpedienteClinicoMSF.Models
     {
         public Examenes()
         {
+            ExamenesMultimedias = new HashSet<ExamenesMultimedias>();
             ExamenesPacientes = new HashSet<ExamenesPacientes>();
             ExamenesResultados = new HashSet<ExamenesResultados>();
-            PresentacionesExamenes = new HashSet<PresentacionesExamenes>();
         }
 
         public int ExamenId { get; set; }
@@ -18,8 +18,8 @@ namespace ExpedienteClinicoMSF.Models
         public string DescripcionExamen { get; set; }
 
         public Categoria Categoria { get; set; }
+        public ICollection<ExamenesMultimedias> ExamenesMultimedias { get; set; }
         public ICollection<ExamenesPacientes> ExamenesPacientes { get; set; }
         public ICollection<ExamenesResultados> ExamenesResultados { get; set; }
-        public ICollection<PresentacionesExamenes> PresentacionesExamenes { get; set; }
     }
 }

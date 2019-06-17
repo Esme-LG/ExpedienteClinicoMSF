@@ -11,8 +11,11 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int CamillaId { get; set; }
+        public int SalaId { get; set; }
         public string CorrelativoCamilla { get; set; }
+        public bool EstadoCamilla { get; set; }
 
+        public Salas Sala { get; set; }
         public ICollection<Hospitalizaciones> Hospitalizaciones { get; set; }
     }
 }

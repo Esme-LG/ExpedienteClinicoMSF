@@ -14,8 +14,8 @@ namespace ExpedienteClinicoMSF.Models
         public int EspecialidadId { get; set; }
         public string Especialidad { get; set; }
         public string DescripcionEsp { get; set; }
-        public bool? EsQuirurgica { get; set; }
-        public bool? EsMedica { get; set; }
+        public bool EsQuirurgica { get; set; }
+        public bool EsMedica { get; set; }
 
         public ICollection<Cirugias> Cirugias { get; set; }
         public ICollection<Medicos> Medicos { get; set; }

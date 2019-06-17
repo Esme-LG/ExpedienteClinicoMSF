@@ -23,6 +23,7 @@ namespace ExpedienteClinicoMSF.Models
 
         public Medicos Medico { get; set; }
         public Pacientes Paciente { get; set; }
+        public SignosVitales SignoVital { get; set; }
         public ICollection<Diagnosticos> Diagnosticos { get; set; }
         public ICollection<ExamenesPacientes> ExamenesPacientes { get; set; }
         public ICollection<Tratamientos> Tratamientos { get; set; }
