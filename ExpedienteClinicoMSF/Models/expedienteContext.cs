@@ -1185,6 +1185,8 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.TratamientoId).HasColumnName("TRATAMIENTO_ID");
 
+                entity.Property(e => e.Cantidad).HasColumnName("CANTIDAD");
+
                 entity.HasOne(d => d.Medicamentos)
                     .WithMany(p => p.Recetas)
                     .HasForeignKey(d => d.MedicamentosId)

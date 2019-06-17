@@ -7,6 +7,7 @@ namespace ExpedienteClinicoMSF.Models
     {
         public int MedicamentosId { get; set; }
         public int TratamientoId { get; set; }
+        public short Cantidad { get; set; }
 
         public Medicamentos Medicamentos { get; set; }
         public Tratamientos Tratamiento { get; set; }

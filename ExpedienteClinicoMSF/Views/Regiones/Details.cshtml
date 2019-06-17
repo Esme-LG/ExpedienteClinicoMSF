@@ -1,0 +1,30 @@
+﻿@model ExpedienteClinicoMSF.Models.Regiones
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Regiones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Region)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Region)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RegRegion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegRegion.Region)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RegionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
