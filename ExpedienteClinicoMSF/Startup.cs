@@ -37,7 +37,7 @@ namespace ExpedienteClinicoMSF
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<expedienteContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("localDT")));
+                (options => options.UseSqlServer(Configuration.GetConnectionString("localDR")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
