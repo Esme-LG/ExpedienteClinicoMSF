@@ -248,6 +248,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("CODIGOS_CIE10");
 
+                entity.HasIndex(e => e.Cie10)
+                    .HasName("UQ__CODIGOS___A6999B419304BE24")
+                    .IsUnique();
+
                 entity.Property(e => e.CodigoId).HasColumnName("CODIGO_ID");
 
                 entity.Property(e => e.Cie10)
@@ -611,6 +615,10 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.GeneroId)
                     .HasName("ES___FK");
 
+                entity.HasIndex(e => e.NumExpediente)
+                    .HasName("UQ__EXPEDIEN__5E02FDBF362A49D8")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.PacienteId)
                     .HasName("GUARDA_DATOS_EN_FK");
 
@@ -858,6 +866,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Campo)
+                    .IsRequired()
+                    .HasColumnName("CAMPO")
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Entidad)
                     .IsRequired()
                     .HasColumnName("ENTIDAD")
@@ -867,6 +881,16 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.FechaAccion)
                     .HasColumnName("FECHA_ACCION")
                     .HasColumnType("datetime");
+
+                entity.Property(e => e.ValorNuevo)
+                    .HasColumnName("VALOR_NUEVO")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValorOriginal)
+                    .HasColumnName("VALOR_ORIGINAL")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Usuarios)
                     .WithMany(p => p.Logs)
@@ -905,6 +929,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.HospitalId)
                     .HasName("TIENE__FK");
+
+                entity.HasIndex(e => e.NumMedico)
+                    .HasName("UQ__MEDICOS__B1D83B477007F6B6")
+                    .IsUnique();
 
                 entity.Property(e => e.MedicoId).HasColumnName("MEDICO_ID");
 
@@ -1012,6 +1040,10 @@ namespace ExpedienteClinicoMSF.Models
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("PACIENTES");
+
+                entity.HasIndex(e => e.PacienteEmail)
+                    .HasName("UQ__PACIENTE__B3D5C67BF0F0B6DE")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.PersonaId)
                     .HasName("ES_UNA__FK");
@@ -1538,6 +1570,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.DireccionId)
                     .HasName("VIVE_EN__FK");
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("UQ__USUARIOS__161CF7243E33B236")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.EstadoCivilId)
                     .HasName("ESTA_FK");
