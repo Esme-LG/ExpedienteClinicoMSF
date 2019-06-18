@@ -47,7 +47,7 @@ namespace ExpedienteClinicoMSF.Controllers
         // GET: Regiones/Create
         public IActionResult Create()
         {
-            ViewData["RegRegionId"] = new SelectList(_context.Regiones, "RegionId", "Region");
+            ViewData["RegRegionId"] = new SelectList(_context.Regiones.Where(x => x.RegRegionId == null).ToList(), "RegionId", "Region");
             return View();
         }
 
@@ -81,7 +81,7 @@ namespace ExpedienteClinicoMSF.Controllers
             {
                 return NotFound();
             }
-            ViewData["RegRegionId"] = new SelectList(_context.Regiones, "RegionId", "Region", regiones.RegRegionId);
+            ViewData["RegRegionId"] = new SelectList(_context.Regiones.Where(x => x.RegRegionId == null).ToList(), "RegionId", "Region", regiones.RegRegionId);
             return View(regiones);
         }
 

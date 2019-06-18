@@ -1,4 +1,5 @@
-﻿
+﻿@model ExpedienteClinicoMSF.Models.Usuarios
+
 @{
     ViewData["Title"] = "Regístrate";
 }
@@ -6,111 +7,192 @@
     <link href="@Url.Content("~/css/form-sign-up.css")" rel="stylesheet" />
     <link href="@Url.Content("~/css/sign-up.css")" rel="stylesheet" />
     <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
+    <link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css")" rel="stylesheet" />
 }
 
 <h2>Regístrate</h2>
 
 <!-- Top content -->
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
-                <form role="form" action="" method="post" class="f1">
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+        <form asp-action="SignUp" class="f1" role="form">
 
-                    <h3>Registra tu clinica en nuestra plataforma</h3>
-                    <p>Completa los datos del formulario y espera nuestra pronta respuesta</p>
-                    <div class="f1-steps">
-                        <div class="f1-progress">
-                            <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
-                        </div>
-                        <div class="f1-step active">
-                            <div class="f1-step-icon"><i class="fa fa-user"></i></div>
-                            <p>Información Personal</p>
-                        </div>
-                        <div class="f1-step">
-                            <div class="f1-step-icon"><i class="fa fa-key"></i></div>
-                            <p>Cuenta</p>
-                        </div>
-                        <div class="f1-step">
-                            <div class="f1-step-icon"><i class="fas fa-hospital"></i></div>
-                            <p>Hospital/Clínica</p>
+            <h3>Registra tu clinica en nuestra plataforma</h3>
+            <p>Completa los datos del formulario y espera nuestra pronta respuesta</p>
+            <div class="f1-steps">
+                <div class="f1-progress">
+                    <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
+                </div>
+                <div class="f1-step active">
+                    <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                    <p>Información Personal</p>
+                </div>
+                <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fa fa-key"></i></div>
+                    <p>Cuenta</p>
+                </div>
+                <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fas fa-hospital"></i></div>
+                    <p>Hospital/Clínica</p>
+                </div>
+            </div>
+
+            <fieldset>
+                <h4></h4>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.PrimerNombre">Primer nombre</label>
+                    <input asp-for="Persona.PrimerNombre" type="text" name="f1-first-name" class="f1-first-name form-control" id="f1-first-name">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.SegundoNombre">Segundo nombre</label>
+                    <input asp-for="Persona.SegundoNombre" type="text" name="f1-second-name" class="f1-second-name form-control" id="f1-second-name">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.ApellidoPaterno">Primer apellido</label>
+                    <input asp-for="Persona.ApellidoPaterno" type="text" name="f1-last-name1" class="f1-last-name1 form-control" id="f1-last-name1">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.ApellidoMaterno">Segundo apellido</label>
+                    <input asp-for="Persona.ApellidoMaterno" type="text" name="f1-last-name2" class="f1-last-name2 form-control" id="f1-last-name2">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.ApellidoCasada" for="f1-apellido-casada">Apellido de casada</label>
+                    <input asp-for="Persona.ApellidoCasada" type="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Telefonos">Telefono</label>
+                    <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" name="f1-tel">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="GeneroId">Género</label>
+                    <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="EstadoCivilId">Estado Civil</label>
+                    <select asp-for="EstadoCivilId" class="form-control" asp-items="ViewBag.EstadoCivilId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Persona.FechaNacimiento">Fecha de nacimiento</label>
+                    <div class="input-group date" data-provide="datepicker">
+                        <input asp-for="Persona.FechaNacimiento" type="text" class="form-control" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
                         </div>
                     </div>
+                </div>
+                <div><h3>Direccion</h3></div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label  asp-for="Direccion.Pais.PaisId">Pais</label>
+                    <select asp-for="Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Direccion">Region</label>
+                    <select asp-for="Direccion" class="form-control" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Direccion">Sub region</label>
+                    <select asp-for="Direccion" class="form-control" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Direccion.Ciudad">Ciudad</label>
+                    <input asp-for="Direccion.Ciudad" class="form-control" type="text" id="f1-ciudad" name="f1-ciudad">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Direccion.Calle">Calle</label>
+                    <input asp-for="Direccion.Calle" class="form-control" type="text" id="f1-calle" name="f1-calle">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Direccion.NumeroCasa">Numero de casa</label>
+                    <input asp-for="Direccion.NumeroCasa" class="form-control" type="number" id="f1-casa" name="f1-casa" min="1">
+                </div>
+                <div class="f1-buttons">
+                    <button type="button" class="btn btn-next">Next</button>
+                </div>
+            </fieldset>
 
-                    <fieldset>
-                        <h4>Tell us who you are:</h4>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-first-name">Primer nombre</label>
-                            <input type="text" name="f1-first-name" class="f1-first-name form-control" id="f1-first-name">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-second-name">Segundo nombre</label>
-                            <input type="text" name="f1-second-name" class="f1-second-name form-control" id="f1-second-name">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-last-name1">Primer apellido</label>
-                            <input type="text" name="f1-last-name1" class="f1-last-name1 form-control" id="f1-last-name1">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-last-name2">Segundo apellido</label>
-                            <input type="text" name="f1-last-name2" class="f1-last-name2 form-control" id="f1-last-name2">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-apellido-casada">Apellido de casada</label>
-                            <input type="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="f1-apellido-casada">Género</label>
-                            
-                        </div>
-                        <div class="f1-buttons">
-                            <button type="button" class="btn btn-next">Next</button>
-                        </div>
-                    </fieldset>
+            <fieldset>
+                <h4></h4>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for="Email" type="email" name="f1-email" class="f1-email form-control" id="f1-email">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Pass">Contraseña</label>
+                    <input asp-for="Pass" type="password" name="f1-password" class="f1-password form-control" id="f1-password">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label for="f1-repeat-password">Repetir contraseña</label>
+                    <input type="password" name="f1-repeat-password"
+                           class="f1-repeat-password form-control" id="f1-repeat-password">
+                </div>
+                <div class="f1-buttons">
+                    <button type="button" class="btn btn-previous">Previous</button>
+                    <button type="button" class="btn btn-next">Next</button>
+                </div>
+            </fieldset>
 
-                    <fieldset>
-                        <h4>Set up your account:</h4>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-email">Email</label>
-                            <input type="text" name="f1-email" placeholder="Email..." class="f1-email form-control" id="f1-email">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-password">Password</label>
-                            <input type="password" name="f1-password" placeholder="Password..." class="f1-password form-control" id="f1-password">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-repeat-password">Repeat password</label>
-                            <input type="password" name="f1-repeat-password" placeholder="Repeat password..."
-                                   class="f1-repeat-password form-control" id="f1-repeat-password">
-                        </div>
-                        <div class="f1-buttons">
-                            <button type="button" class="btn btn-previous">Previous</button>
-                            <button type="button" class="btn btn-next">Next</button>
-                        </div>
-                    </fieldset>
+            <fieldset>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.HospitalNombre">Nombre del hospital/clinica</label>
+                    <input asp-for="Hospital.HospitalNombre" class="form-control" type="text" id="f1-hospital" name="f1-hospital">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.DuracionPromConsulta">Duracion de consulta</label>
+                    <select asp-for="Hospital.DuracionPromConsulta" class="form-control">
+                        <option value="5 min">5 min</option>                    
+                        <option value="10 min">10 min</option>
+                        <option value="15 min">15 min</option>
+                        <option value="30 min">30 min</option>
+                        <option value="45 min">45 min</option>
+                        <option value="60 min">6015 min</option>
+                    </select>
+                </div>
+                <div><h3>Direccion</h3></div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion.Pais.PaisId">Duracion de consulta</label>
+                    <select asp-for="Hospital.Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion">Region</label>
+                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion">Sub region</label>
+                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion.Ciudad">Ciudad</label>
+                    <input asp-for="Hospital.Direccion.Ciudad" class="form-control" type="text" id="f1-ciudad-h" name="f1-ciudad-h">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion.Calle">Calle</label>
+                    <input asp-for="Hospital.Direccion.Calle" class="form-control" type="text" id="f1-calle-h" name="f1-calle-h">
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    <label asp-for="Hospital.Direccion.NumeroCasa">Numero de casa</label>
+                    <input asp-for="Hospital.Direccion.NumeroCasa" class="form-control" type="number" id="f1-casa-h" name="f1-casa-h" min="1">
+                </div>
+                <div class="f1-buttons">
+                    <button type="button" class="btn btn-previous">Previous</button>
+                    <input type="submit" class="btn btn-submit" value="Registrar">
+                </div>
+            </fieldset>
 
-                    <fieldset>
-                        <h4>Social media profiles:</h4>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-facebook">Facebook</label>
-                            <input type="text" name="f1-facebook" placeholder="Facebook..." class="f1-facebook form-control" id="f1-facebook">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-twitter">Twitter</label>
-                            <input type="text" name="f1-twitter" placeholder="Twitter..." class="f1-twitter form-control" id="f1-twitter">
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label class="sr-only" for="f1-google-plus">Google plus</label>
-                            <input type="text" name="f1-google-plus" placeholder="Google plus..." class="f1-google-plus form-control" id="f1-google-plus">
-                        </div>
-                        <div class="f1-buttons">
-                            <button type="button" class="btn btn-previous">Previous</button>
-                            <button type="submit" class="btn btn-submit">Submit</button>
-                        </div>
-                    </fieldset>
-
-                </form>
-            </div>
-        </div>
+        </form>
+    </div>
+</div>
 
 @section scripts {
     <script src="~/js/sign-up.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                minView: 2,
+                format: 'dd-mm-yyyy HH:ii p',
+                startDate: new Date,
+                autoclose: true,
+            });
+        })
+    </script>
 }
