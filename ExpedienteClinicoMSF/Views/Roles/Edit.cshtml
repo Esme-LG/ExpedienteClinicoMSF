@@ -40,7 +40,7 @@
                                     }
                                     @:<td>
                                         <input type="checkbox"
-                                               name="selectedCourses"
+                                               name="selectedMenus"
                                                value="@opcion.MenuId"
                                                @(Html.Raw(opcion.Asignado ? "checked=\"checked\"" : "")) />
                                         @opcion.Opcion
@@ -51,10 +51,40 @@
                         </table>
                     </div>
                 </div>
-             <div class="form-group">
-                 <input type="submit" value="Guardar" class="btn btn-default" />
-             </div>
-         </form>
+
+                <div class="form-group">
+                    <label class="control-label">Permisos</label>
+                    <div class="col-md-offset-2 col-md-10">
+                        <table>
+                            <tr>
+                                @{
+                                    int ct = 0;
+                                    List<ExpedienteClinicoMSF.Models.ExpedienteViewModels.PermisoRolData> opcioness = ViewBag.Permisos;
+
+                                    foreach (var option in opcioness)
+                                    {
+                                        if (ct++ % 3 == 0)
+                                        {
+                                        @:</tr><tr>
+                                        }
+                                        @:<td>
+                                            <input type="checkbox"
+                                                   name="selectedPermisos"
+                                                   value="@option.PermisoId"
+                                                   @(Html.Raw(option.Asignado ? "checked=\"checked\"" : "")) />
+                                            @option.Option
+                                        @:</td>
+                                    }
+                                @:</tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </form>
     </div>
 </div>
 <div>
