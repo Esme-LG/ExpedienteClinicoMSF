@@ -41,6 +41,24 @@
                 }
             </table>
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RolesPermisos)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Permiso Asignado</th>
+                </tr>
+                @foreach (var item in Model.RolesPermisos)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Permiso.Permiso)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
     </dl>
 
 

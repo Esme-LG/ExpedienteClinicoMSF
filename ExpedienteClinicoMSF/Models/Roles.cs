@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -12,8 +13,11 @@ namespace ExpedienteClinicoMSF.Models
             Usuarios = new HashSet<Usuarios>();
         }
 
+        
         public int RolId { get; set; }
+        [Display(Name = "Rol")]
         public string Rol { get; set; }
+        [Display(Name = "Descripcion del Rol")]
         public string DescripcionRol { get; set; }
 
         public ICollection<RolesMenus> RolesMenus { get; set; }
