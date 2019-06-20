@@ -12,9 +12,11 @@ namespace ExpedienteClinicoMSF.Models
 
         public int CirugiaId { get; set; }
         public int EspecialidadId { get; set; }
+        public int? HospitalId { get; set; }
         public string Cirugia { get; set; }
 
         public Especialidades Especialidad { get; set; }
+        public Hospitales Hospital { get; set; }
         public ICollection<CirugiasPacientes> CirugiasPacientes { get; set; }
     }
 }
