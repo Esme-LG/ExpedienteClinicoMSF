@@ -12,10 +12,12 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int SalaId { get; set; }
+        public int? HospitalId { get; set; }
         public short NumeroSala { get; set; }
         public string NombreSala { get; set; }
         public bool EstadoSala { get; set; }
 
+        public Hospitales Hospital { get; set; }
         public ICollection<Camillas> Camillas { get; set; }
         public ICollection<Hospitalizaciones> Hospitalizaciones { get; set; }
     }

@@ -63,9 +63,11 @@ namespace ExpedienteClinicoMSF.Controllers
 
             var roles = await _context.Roles
                 .Include(s => s.RolesMenus)
-                    .ThenInclude(e => e.Menu)
-                .AsNoTracking()
+                    .ThenInclude(e => e.Menu).Include(s => s.RolesPermisos)
+                    .ThenInclude(s => s.Permiso).AsNoTracking()
                 .FirstOrDefaultAsync(m => m.RolId == id);
+                RellenarPermisosAsignados(roles);
+                RellenarMenusAsignados(roles);
             if (roles == null)
             {
                 return NotFound();

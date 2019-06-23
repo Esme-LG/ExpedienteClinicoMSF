@@ -123,6 +123,9 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("CAMILLAS");
 
+                entity.HasIndex(e => e.HospitalId)
+                    .HasName("_POSEE_FK");
+
                 entity.HasIndex(e => e.SalaId)
                     .HasName("CUENTA_CON_FK");
 
@@ -136,7 +139,14 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.EstadoCamilla).HasColumnName("ESTADO_CAMILLA");
 
+                entity.Property(e => e.HospitalId).HasColumnName("HOSPITAL_ID");
+
                 entity.Property(e => e.SalaId).HasColumnName("SALA_ID");
+
+                entity.HasOne(d => d.Hospital)
+                    .WithMany(p => p.Camillas)
+                    .HasForeignKey(d => d.HospitalId)
+                    .HasConstraintName("FK_CAMILLAS__POSEE_HOSPITAL");
 
                 entity.HasOne(d => d.Sala)
                     .WithMany(p => p.Camillas)
@@ -177,6 +187,9 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.EspecialidadId)
                     .HasName("PUEDE_REALIZAR_FK");
 
+                entity.HasIndex(e => e.HospitalId)
+                    .HasName("PUEDE_REALIZAR__FK");
+
                 entity.Property(e => e.CirugiaId).HasColumnName("CIRUGIA_ID");
 
                 entity.Property(e => e.Cirugia)
@@ -187,11 +200,18 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.EspecialidadId).HasColumnName("ESPECIALIDAD_ID");
 
+                entity.Property(e => e.HospitalId).HasColumnName("HOSPITAL_ID");
+
                 entity.HasOne(d => d.Especialidad)
                     .WithMany(p => p.Cirugias)
                     .HasForeignKey(d => d.EspecialidadId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CIRUGIAS_PUEDE_REA_ESPECIAL");
+
+                entity.HasOne(d => d.Hospital)
+                    .WithMany(p => p.Cirugias)
+                    .HasForeignKey(d => d.HospitalId)
+                    .HasConstraintName("FK_CIRUGIAS_PUEDE_REA_HOSPITAL");
             });
 
             modelBuilder.Entity<CirugiasPacientes>(entity =>
@@ -247,6 +267,10 @@ namespace ExpedienteClinicoMSF.Models
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("CODIGOS_CIE10");
+
+                entity.HasIndex(e => e.Cie10)
+                    .HasName("UQ__CODIGOS___A6999B41950B0424")
+                    .IsUnique();
 
                 entity.Property(e => e.CodigoId).HasColumnName("CODIGO_ID");
 
@@ -611,6 +635,10 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.GeneroId)
                     .HasName("ES___FK");
 
+                entity.HasIndex(e => e.NumExpediente)
+                    .HasName("UQ__EXPEDIEN__5E02FDBF425C735D")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.PacienteId)
                     .HasName("GUARDA_DATOS_EN_FK");
 
@@ -858,6 +886,12 @@ namespace ExpedienteClinicoMSF.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Campo)
+                    .IsRequired()
+                    .HasColumnName("CAMPO")
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Entidad)
                     .IsRequired()
                     .HasColumnName("ENTIDAD")
@@ -867,6 +901,16 @@ namespace ExpedienteClinicoMSF.Models
                 entity.Property(e => e.FechaAccion)
                     .HasColumnName("FECHA_ACCION")
                     .HasColumnType("datetime");
+
+                entity.Property(e => e.ValorNuevo)
+                    .HasColumnName("VALOR_NUEVO")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ValorOriginal)
+                    .HasColumnName("VALOR_ORIGINAL")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Usuarios)
                     .WithMany(p => p.Logs)
@@ -882,7 +926,12 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("MEDICAMENTOS");
 
+                entity.HasIndex(e => e.HospitalId)
+                    .HasName("POSEE__FK");
+
                 entity.Property(e => e.MedicamentosId).HasColumnName("MEDICAMENTOS_ID");
+
+                entity.Property(e => e.HospitalId).HasColumnName("HOSPITAL_ID");
 
                 entity.Property(e => e.Medicamento)
                     .IsRequired()
@@ -891,6 +940,11 @@ namespace ExpedienteClinicoMSF.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Stock).HasColumnName("STOCK");
+
+                entity.HasOne(d => d.Hospital)
+                    .WithMany(p => p.Medicamentos)
+                    .HasForeignKey(d => d.HospitalId)
+                    .HasConstraintName("FK_MEDICAME_POSEE__HOSPITAL");
             });
 
             modelBuilder.Entity<Medicos>(entity =>
@@ -905,6 +959,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.HospitalId)
                     .HasName("TIENE__FK");
+
+                entity.HasIndex(e => e.NumMedico)
+                    .HasName("UQ__MEDICOS__B1D83B471BB4A1CD")
+                    .IsUnique();
 
                 entity.Property(e => e.MedicoId).HasColumnName("MEDICO_ID");
 
@@ -1012,6 +1070,10 @@ namespace ExpedienteClinicoMSF.Models
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("PACIENTES");
+
+                entity.HasIndex(e => e.PacienteEmail)
+                    .HasName("UQ__PACIENTE__B3D5C67BAF858AC4")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.PersonaId)
                     .HasName("ES_UNA__FK");
@@ -1185,6 +1247,8 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.TratamientoId).HasColumnName("TRATAMIENTO_ID");
 
+                entity.Property(e => e.Cantidad).HasColumnName("CANTIDAD");
+
                 entity.HasOne(d => d.Medicamentos)
                     .WithMany(p => p.Recetas)
                     .HasForeignKey(d => d.MedicamentosId)
@@ -1350,9 +1414,14 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.ToTable("SALAS");
 
+                entity.HasIndex(e => e.HospitalId)
+                    .HasName("CUENTA_CON__FK");
+
                 entity.Property(e => e.SalaId).HasColumnName("SALA_ID");
 
                 entity.Property(e => e.EstadoSala).HasColumnName("ESTADO_SALA");
+
+                entity.Property(e => e.HospitalId).HasColumnName("HOSPITAL_ID");
 
                 entity.Property(e => e.NombreSala)
                     .IsRequired()
@@ -1361,6 +1430,11 @@ namespace ExpedienteClinicoMSF.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.NumeroSala).HasColumnName("NUMERO_SALA");
+
+                entity.HasOne(d => d.Hospital)
+                    .WithMany(p => p.Salas)
+                    .HasForeignKey(d => d.HospitalId)
+                    .HasConstraintName("FK_SALAS_CUENTA_CO_HOSPITAL");
             });
 
             modelBuilder.Entity<SignosVitales>(entity =>
@@ -1536,6 +1610,10 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.HasIndex(e => e.DireccionId)
                     .HasName("VIVE_EN__FK");
+
+                entity.HasIndex(e => e.Email)
+                    .HasName("UQ__USUARIOS__161CF724A17D8CFA")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.EstadoCivilId)
                     .HasName("ESTA_FK");

@@ -11,6 +11,9 @@ namespace ExpedienteClinicoMSF.Models
         public string Accion { get; set; }
         public string Entidad { get; set; }
         public DateTime FechaAccion { get; set; }
+        public string Campo { get; set; }
+        public string ValorOriginal { get; set; }
+        public string ValorNuevo { get; set; }
 
         public Usuarios Usuarios { get; set; }
     }
