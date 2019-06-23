@@ -230,7 +230,7 @@ namespace ExpedienteClinicoMSF.Controllers
                 rol.RolesMenus = new List<RolesMenus>();
                 return;
             }
-
+            
             var opcionesSeleccionadasHS = new HashSet<string>(selectedMenus);
             var rolMenu = new HashSet<int>(rol.RolesMenus.Select(c => c.Menu.MenuId));
             foreach (var opcion in _context.Menus)

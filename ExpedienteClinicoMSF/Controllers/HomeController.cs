@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace ExpedienteClinicoMSF.Controllers
 {
@@ -59,20 +61,38 @@ namespace ExpedienteClinicoMSF.Controllers
         // POST: SignUp
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignUp(Usuarios usuario)
+        public async Task<IActionResult> SignUp(Usuarios usuario, IFormCollection form)
         {
-            System.Diagnostics.Debug.WriteLine("##### REGISTRAR ###################################3");
-            if (ModelState.IsValid)
-            {
-                
-                //_context.Add(persona);
-                System.Diagnostics.Debug.WriteLine(usuario.EstadoCivil.EstadoCivil);
-                System.Diagnostics.Debug.WriteLine("########################################");
-                // _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
-            }
+            String firstname = form["f1firstname"]; ;
+            String secondname = form["f1secondname"];
+            String lastname1 = form["f1lastname1"];
+            String lastname2 = form["f1lastname2"];
+            String apellidocasada = form["f1apellidocasada"];
+            String tel = form["f1-tel"];
+            String gen =  form["f1-gen"];
+            String estcivil = form["f1-est-civil"];
+            String fechanacimiento = "14-03-1994"/*form["f1-fecha-nacimiento"]*/;
+            String pais = form["f1-pais"];
+            String region = form["f1-region"];
+            String subregion =  form["f1-subregion"];
+            String ciudad = form["f1-ciudad"];
+            String calle = form["f1-calle"];
+            String casa = form["f1-casa"];
+            String hospital = form["f1-hospital"];
+            String durconsulta = form["f1-dur-consulta"];
+            String paish = form["f1-pais-h"];
+            String regionh = form["f1-region-h"];
+            String subregionh =  form["f1-subregion-h"];
+            String ciudadh = form["f1-ciudad-h"];
+            String calleh = form["f1-calle-h"];
+            String casah = form["f1-casa-h"];
+            String email = form["f1-email"];
+            String password = form["f1-password"];
+            password = EncryptPassword(password);
 
-            return View();
+            var x = _context.Database.ExecuteSqlCommand("spResgistrarUsuario @p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24", parameters: new[] { firstname, secondname, lastname1, lastname2, apellidocasada, fechanacimiento, pais, ciudad, calle, casa, region, subregion, hospital, durconsulta, paish, ciudadh, calleh, casah, regionh, subregionh, email, password,estcivil,gen, tel});
+            System.Diagnostics.Debug.WriteLine(x);
+            return View("Index");
         }
 
         public static string EncryptPassword(string data)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 
 namespace ExpedienteClinicoMSF.Models
@@ -35,5 +36,7 @@ namespace ExpedienteClinicoMSF.Models
         public ICollection<Logs> Logs { get; set; }
         public ICollection<Personas> Personas { get; set; }
         public ICollection<Telefonos> Telefonos { get; set; }
+
+
     }
 }
