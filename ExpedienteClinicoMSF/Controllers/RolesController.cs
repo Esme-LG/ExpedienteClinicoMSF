@@ -13,6 +13,7 @@ namespace ExpedienteClinicoMSF.Controllers
     public class RolesController : Controller
     {
         private readonly expedienteContext _context;
+        UserDataAccessLayer objUser = new UserDataAccessLayer();
 
         public RolesController(expedienteContext context)
         {
@@ -84,6 +85,8 @@ namespace ExpedienteClinicoMSF.Controllers
             rol.RolesPermisos = new List<RolesPermisos>();
             RellenarPermisosAsignados(rol); 
             RellenarMenusAsignados(rol);
+            
+            ViewBag.Nombre= objUser.ToString();
             return View();
         }
 

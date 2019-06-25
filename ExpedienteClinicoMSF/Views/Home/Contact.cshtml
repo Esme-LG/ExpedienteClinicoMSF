@@ -1,6 +1,17 @@
-﻿@{
+﻿@model ExpedienteClinicoMSF.Models.RolUser
+
+@{
     ViewData["Title"] = "Contact";
 }
+
+@if (UserDataAccessLayer.RoleUsers("fer@gmail.com", UserDataAccessLayer.GetConnectionString()) == "Administrador")
+{
+    <h1> Si se pudo :V  </h1>
+   <h2> @UserDataAccessLayer.RoleUsers("fer@gmail.com", UserDataAccessLayer.GetConnectionString())</h2>
+   
+}
+
+
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 

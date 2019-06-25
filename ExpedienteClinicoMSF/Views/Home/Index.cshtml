@@ -1,6 +1,16 @@
-﻿@{
+﻿@model ExpedienteClinicoMSF.Models.UserDataAccessLayer
+
+@{
     ViewData["Title"] = "Inicio";
+
 }
+
+@if (UserDataAccessLayer.RoleUsers("fer@gmail.com", UserDataAccessLayer.GetConnectionString())=="Administrador")
+  {     
+    <h5> Si se pudo :V</h5>
+  }
+
+
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

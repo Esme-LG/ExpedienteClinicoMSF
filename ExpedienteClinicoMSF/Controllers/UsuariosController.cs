@@ -50,7 +50,7 @@ namespace ExpedienteClinicoMSF.Controllers
 
             return View(usuarios);
         }
-
+        
         // GET: Usuarios/Create
         public IActionResult Create()
         {
@@ -207,5 +207,9 @@ namespace ExpedienteClinicoMSF.Controllers
         {
             return _context.Usuarios.Any(e => e.PersonaId == id);
         }
+
+        
+
+                 
     }
 }
