@@ -37,31 +37,34 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         @if (User.IsInRole("Administrador"))
-                        { <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>}
+                        {
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>}
 
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                        
-                        <li><a asp-area="" asp-controller="Roles" asp-action="Index">ROLES</a></li>
+                        @if (User.IsInRole("Doctor"))
+                        { <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>}
+
+                            <li><a asp-area="" asp-controller="Roles" asp-action="Index">ROLES</a></li>
                     }
 
 
                     @if (!User.Identity.IsAuthenticated)
-                    
+
                     {
                         <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Registro</a></li>
                         <li><a asp-area="" asp-controller="Login" asp-action="UserLogin">Login</a></li>
 
                     }
-                        
 
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            
-                            <li><a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
 
-                        }
+                    @if (User.Identity.IsAuthenticated)
+                    {
 
-                    </ul>
+                        <li><a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
+
+                    }
+
+                </ul>
             </div>
         </div>
     </nav>

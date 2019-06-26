@@ -44,7 +44,7 @@ namespace ExpedienteClinicoMSF.Controllers
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -52,6 +52,7 @@ namespace ExpedienteClinicoMSF.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Doctor")]
         public IActionResult Privacy()
         {
             return View();

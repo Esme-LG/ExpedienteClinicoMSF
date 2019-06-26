@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExpedienteClinicoMSF.Models;
 using ExpedienteClinicoMSF.Models.ExpedienteViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExpedienteClinicoMSF.Controllers
 {
@@ -21,6 +22,7 @@ namespace ExpedienteClinicoMSF.Controllers
         }
 
         // GET: Roles
+        
         public async Task<IActionResult> Index(string sortOrder, string cadenaBusqueda)
         {
             ViewData["ordenarRol"] = String.IsNullOrEmpty(sortOrder) ? "Rol" : "";
@@ -55,6 +57,7 @@ namespace ExpedienteClinicoMSF.Controllers
         }
 
         // GET: Roles/Details/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
