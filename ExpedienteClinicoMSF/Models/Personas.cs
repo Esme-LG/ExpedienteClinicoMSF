@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -12,17 +13,22 @@ namespace ExpedienteClinicoMSF.Models
             Responsables = new HashSet<Responsables>();
             UsuariosNavigation = new HashSet<Usuarios>();
         }
-
+        
         public int PersonaId { get; set; }
         public int? UsuarioId { get; set; }
         public int? PacienteId { get; set; }
         public int? FamiliarId { get; set; }
         public int? ResponsableId { get; set; }
+        [Required]
         public string PrimerNombre { get; set; }
+        [Required]
         public string SegundoNombre { get; set; }
+        [Required]
         public string ApellidoPaterno { get; set; }
+        [Required]
         public string ApellidoMaterno { get; set; }
         public string ApellidoCasada { get; set; }
+        [Required]
         public DateTime FechaNacimiento { get; set; }
 
         public Familiares Familiar { get; set; }

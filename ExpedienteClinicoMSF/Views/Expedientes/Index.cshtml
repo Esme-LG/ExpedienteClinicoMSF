@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ExpedienteClinicoMSF.Models.Expedientes>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Gestión de Expedientes Clinicos</h2>
+
+<p>
+    <a asp-action="Create">Crear expediente</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumExpediente)
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Apellidos
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpEstado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCreacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumExpediente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paciente.PersonaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paciente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpEstado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCreacion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ExpedienteId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ExpedienteId">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

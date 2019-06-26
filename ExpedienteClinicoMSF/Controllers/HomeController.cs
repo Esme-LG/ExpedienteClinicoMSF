@@ -71,7 +71,7 @@ namespace ExpedienteClinicoMSF.Controllers
             String tel = form["f1-tel"];
             String gen =  form["f1-gen"];
             String estcivil = form["f1-est-civil"];
-            String fechanacimiento = "14-03-1994"/*form["f1-fecha-nacimiento"]*/;
+            String fechanacimiento = form["f1-fecha-nacimiento"];
             String pais = form["f1-pais"];
             String region = form["f1-region"];
             String subregion =  form["f1-subregion"];
