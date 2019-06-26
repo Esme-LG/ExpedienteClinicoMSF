@@ -63,8 +63,8 @@ namespace ExpedienteClinicoMSF.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INN4EME\\SQLEXPRESS;Initial Catalog=expediente;Integrated Security=True;");
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-TT8A6JE\\SQLEXPRESS;Initial Catalog=expediente;Integrated Security=True;");
             }
         }
 
@@ -1704,6 +1704,8 @@ namespace ExpedienteClinicoMSF.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_USUARIOS_TIENE_ROLES");
             });
+
+
         }
     }
 }
