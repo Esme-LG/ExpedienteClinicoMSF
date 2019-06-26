@@ -13,51 +13,21 @@ namespace ExpedienteClinicoMSF.Controllers
         public class LoginController : Controller
         {
             UserDataAccessLayer objUser = new UserDataAccessLayer();
-            public static string email { get; set; }
-
+          
+      
         [HttpGet]
-            public IActionResult RegisterUser()
-            {
-
-                return View();
-            }
-
-            [HttpPost]
-            public IActionResult RegisterUser([Bind] UserDetails user)
-            {
-                if (ModelState.IsValid)
-                {
-                    string RegistrationStatus = objUser.RegisterUser(user);
-                    if (RegistrationStatus == "Success")
-                    {
-                        ModelState.Clear();
-                        TempData["Success"] = "Registration Successful!";
-                        return View();
-                    }
-                    else
-                    {
-                        TempData["Fail"] = "This User ID already exists. Registration Failed.";
-                        return View();
-                    }
-                }
-                return View();
-            }
-
-            [HttpGet]
-            
-            
             public IActionResult UserLogin()
             {
-            
             return View();
             }
 
             [HttpPost]
             [ValidateAntiForgeryToken]
-            public async Task<IActionResult> UserLogin([Bind] UserDetails user)
+            public async Task<IActionResult> UserLogin([Bind] Usuarios user)
             {
-                ModelState.Remove("FirstName");
-                ModelState.Remove("LastName");
+               // ModelState.Remove("FirstName");
+              //  ModelState.Remove("LastName");
+              // ModelState.Aggregate("Rol.Rol");
 
                 if (ModelState.IsValid)
                 {
@@ -65,10 +35,17 @@ namespace ExpedienteClinicoMSF.Controllers
 
                     if (LoginStatus == "Success")
                     {
+                      
                         var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.UserID)
-                    };
+
+                        {
+                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim(ClaimTypes.Role,objUser.RoleUsers(user.Email))
+
+
+                        };
+
+                    
                         ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
 

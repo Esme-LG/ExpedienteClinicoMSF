@@ -36,19 +36,23 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        @if (User.IsInRole("Administrador"))
+                        { <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>}
+
                         <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Registro</a></li>
+                        
                         <li><a asp-area="" asp-controller="Roles" asp-action="Index">ROLES</a></li>
                     }
 
 
                     @if (!User.Identity.IsAuthenticated)
+                    
                     {
+                        <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Registro</a></li>
                         <li><a asp-area="" asp-controller="Login" asp-action="UserLogin">Login</a></li>
 
                     }
-                        <li><a asp-area="" asp-controller="Login" asp-action="RegisterUser">Registrer</a></li>
+                        
 
                         @if (User.Identity.IsAuthenticated)
                         {

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Data;
 using System.Data.SqlClient;
+using ExpedienteClinicoMSF.Controllers;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -23,7 +24,7 @@ namespace ExpedienteClinicoMSF.Models
                 .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
-            //Configure connection in this place the name of appseting.json
+            //Configure connection in this place the name of appseting.json for local BD or AWS instance
             string connectionString = Configuration["ConnectionStrings:localDR"];
 
             return connectionString;
@@ -32,19 +33,19 @@ namespace ExpedienteClinicoMSF.Models
 
         string connectionString = GetConnectionString();
 
-        //To Register a new user 
-        public string RegisterUser(UserDetails user)
+        //To Validate the login
+        public string ValidateLogin(Usuarios user)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("spRegisterUser", con);
+                SqlCommand cmd = new SqlCommand("spValidateUsersLogin", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                cmd.Parameters.AddWithValue("@UserID", user.UserID);
-                cmd.Parameters.AddWithValue("@UserPassword", user.Password);
+                cmd.Parameters.AddWithValue("@LoginEmail", user.Email);
 
+                //string PassHash=HomeController.EncryptPassword(user.Pass);
+                //cmd.Parameters.AddWithValue("@LoginPassword", PassHash);
+                cmd.Parameters.AddWithValue("@LoginPassword", user.Pass);
 
                 con.Open();
                 string result = cmd.ExecuteScalar().ToString();
@@ -54,31 +55,9 @@ namespace ExpedienteClinicoMSF.Models
             }
         }
 
-        //To Validate the login
-        public string ValidateLogin(UserDetails user)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd = new SqlCommand("spValidateUserLogin", con);
-                cmd.CommandType = CommandType.StoredProcedure;
+        //To Validate the Role
 
-                cmd.Parameters.AddWithValue("@LoginID", user.UserID);
-                cmd.Parameters.AddWithValue("@LoginPassword", user.Password);
-
-                con.Open();
-                string result = cmd.ExecuteScalar().ToString();
-                con.Close();
-
-                return result;
-            }
-        }
-
-        //To Validate the login
-
-        string RoleUser = RoleUsers("fer@gmail.com", GetConnectionString());
-
-
-        public static string RoleUsers(string Email, string connectionString)
+         public  string RoleUsers(string Email )
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {

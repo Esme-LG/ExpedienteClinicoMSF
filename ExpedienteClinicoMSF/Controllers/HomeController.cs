@@ -35,7 +35,7 @@ namespace ExpedienteClinicoMSF.Controllers
             return View(); 
         }
 
-        [Authorize]
+        [Authorize (Roles="Administrador")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -57,7 +57,7 @@ namespace ExpedienteClinicoMSF.Controllers
             return View();
         }
 
-        [Authorize]
+        
         // GET: SignUp
         public IActionResult SignUp()
         {
