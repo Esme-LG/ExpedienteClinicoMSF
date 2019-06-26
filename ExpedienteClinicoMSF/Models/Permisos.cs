@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -11,6 +12,8 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int PermisoId { get; set; }
+        [Required(ErrorMessage ="Este campo no puede estar vacio")]
+        [MaxLength(50,ErrorMessage ="Permiso muy largo")]
         public string Permiso { get; set; }
         public bool EstadoPermiso { get; set; }
 
