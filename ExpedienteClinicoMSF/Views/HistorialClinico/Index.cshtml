@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ExpedienteClinicoMSF.Models.Expedientes>
+
+@{
+    ViewData["Title"] = "Listar";
+}
+
+<h2>Gestion de Historial Clinico</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NumExpediente)
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Apellidos
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpEstado)
+            </th>
+            <th>
+                Acciones
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td> 
+                    @Html.DisplayFor(modelItem => item.NumExpediente)
+                </td>
+                <td> 
+                    @Html.DisplayFor(modelItem => item.Paciente.Persona.PrimerNombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paciente.Persona.ApellidoPaterno)
+                </td>
+                <td> @Html.DisplayFor(modelItem => item.ExpEstado) </td>
+                <td>
+                    
+                     <a asp-action="Details" asp-route-id="@item.ExpedienteId">Consultar Expediente</a>
+   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
