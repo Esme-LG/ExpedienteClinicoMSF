@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -20,7 +21,10 @@ namespace ExpedienteClinicoMSF.Models
         public int EstadoCivilId { get; set; }
         public int DireccionId { get; set; }
         public int GeneroId { get; set; }
+        [MaxLength(50,ErrorMessage ="El correo es muy largo")]
         public string Email { get; set; }
+        [Required(ErrorMessage ="Este campo no puede estar vacio")]
+        [MaxLength (25)]
         public string Pass { get; set; }
         public bool Activo { get; set; }
         public bool? Bloqueado { get; set; }
