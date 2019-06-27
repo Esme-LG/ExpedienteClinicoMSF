@@ -7,11 +7,14 @@ namespace ExpedienteClinicoMSF.Models
     {
         public int ExamenResultadoId { get; set; }
         public int ExamenId { get; set; }
+        public int? ExamenPacienteId { get; set; }
         public string Resultado { get; set; }
         public string Medida { get; set; }
-        public decimal ValorMin { get; set; }
-        public decimal ValorMax { get; set; }
+        public decimal? ValorMin { get; set; }
+        public decimal? ValorMax { get; set; }
+        public decimal? Valor { get; set; }
 
         public Examenes Examen { get; set; }
+        public ExamenesPacientes ExamenPaciente { get; set; }
     }
 }

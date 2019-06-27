@@ -7,6 +7,7 @@ namespace ExpedienteClinicoMSF.Models
     {
         public ExamenesPacientes()
         {
+            ExamenesResultados = new HashSet<ExamenesResultados>();
             Multimedias = new HashSet<Multimedias>();
         }
 
@@ -19,6 +20,7 @@ namespace ExpedienteClinicoMSF.Models
 
         public ConsultasMedicas Consulta { get; set; }
         public Examenes Examen { get; set; }
+        public ICollection<ExamenesResultados> ExamenesResultados { get; set; }
         public ICollection<Multimedias> Multimedias { get; set; }
     }
 }
