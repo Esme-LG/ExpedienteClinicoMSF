@@ -35,83 +35,83 @@
                 <div class="form-row">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="NumExpediente" class="control-label"></label>
-                        <input asp-for="NumExpediente" class="form-control" type="text" value="text" name="f1-num-expediente"/>
+                        <input asp-for="NumExpediente" class="form-control" type="text" name="f1-num-expediente"/>
                         <span asp-validation-for="NumExpediente" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.PrimerNombre">Primer nombre</label>
-                        <input asp-for="Paciente.Persona.PrimerNombre" type="text" value="text" name="f1-firstname" class="f1-first-name form-control" id="f1-first-name">
+                        <input asp-for="Paciente.Persona.PrimerNombre" type="text" name="f1-firstname" class="f1-first-name form-control" id="f1-first-name">
                         <span asp-validation-for="Paciente.Persona.PrimerNombre" class="text-danger"></span>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.SegundoNombre">Segundo nombre</label>
-                        <input asp-for="Paciente.Persona.SegundoNombre" type="text" value="text" name="f1-secondname" class="f1-second-name form-control" id="f1-second-name">
+                        <input asp-for="Paciente.Persona.SegundoNombre" type="text" name="f1-secondname" class="f1-second-name form-control" id="f1-second-name">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.ApellidoPaterno">Primer apellido</label>
-                        <input asp-for="Paciente.Persona.ApellidoPaterno" type="text" value="text" name="f1-lastname1" class="f1-last-name1 form-control" id="f1-last-name1">
+                        <input asp-for="Paciente.Persona.ApellidoPaterno" type="text" name="f1-lastname1" class="f1-last-name1 form-control" id="f1-last-name1">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.ApellidoMaterno">Segundo apellido</label>
-                        <input asp-for="Paciente.Persona.ApellidoMaterno" type="text" value="text" name="f1-lastname2" class="f1-last-name2 form-control" id="f1-last-name2">
+                        <input asp-for="Paciente.Persona.ApellidoMaterno" type="text" name="f1-lastname2" class="f1-last-name2 form-control" id="f1-last-name2">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.ApellidoCasada" for="f1-apellido-casada">Apellido de casada</label>
-                        <input asp-for="Paciente.Persona.ApellidoCasada" type="text" value="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                        <input asp-for="Paciente.Persona.ApellidoCasada" type="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="GeneroId">Género</label>
                         <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId" name="f1-gen"><option value="">Seleccione uno</option></select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.FechaNacimiento">Fecha de nacimiento</label>
                         <div class="input-group date" data-provide="datepicker">
-                            <input asp-for="Paciente.Persona.FechaNacimiento" type="text" value="02-05-1998" class="form-control" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento">
+                            <input asp-for="Paciente.Persona.FechaNacimiento" type="text" class="form-control" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="EstadoCivilId">Estado Civil</label>
                         <select asp-for="EstadoCivilId" class="form-control" asp-items="ViewBag.EstadoCivilId" name="f1-est-civil"><option value="">Seleccione uno</option></select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.PacienteEmail">Email</label>
-                        <input asp-for="Paciente.PacienteEmail" class="form-control" type="text" id="f1-email" value="text@app.com" name="f1-email">
+                        <input asp-for="Paciente.PacienteEmail" class="form-control" type="text" id="f1-email" name="f1-email">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Telefonos">Telefono</label>
-                        <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" value="78787475" name="f1-tel">
+                        <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" name="f1-tel">
                     </div>
                 </div>
                 <h3>Dirección:</h3>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion.PaisId">Pais</label>
                         <select asp-for="Direccion.PaisId" class="form-control" asp-items="ViewBag.PaisId" name="f1-pais"><option value="">Seleccione uno</option></select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion">Region</label>
                         <select asp-for="Direccion" class="form-control" name="f1-region" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion">Sub region</label>
                         <select asp-for="Direccion" class="form-control" name="f1-subregion" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion.Ciudad">Ciudad</label>
-                        <input asp-for="Direccion.Ciudad" class="form-control" value="text" type="text" id="f1-ciudad" name="f1-ciudad">
+                        <input asp-for="Direccion.Ciudad" class="form-control" type="text" id="f1-ciudad" name="f1-ciudad">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion.Calle">Calle</label>
-                        <input asp-for="Direccion.Calle" class="form-control" value="text" type="text" id="f1-calle" name="f1-calle">
+                        <input asp-for="Direccion.Calle" class="form-control" type="text" id="f1-calle" name="f1-calle">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Direccion.NumeroCasa">Numero de casa</label>
-                        <input asp-for="Direccion.NumeroCasa" class="form-control" type="number" value="1" id="f1-casa" name="f1-casa" min="1">
+                        <input asp-for="Direccion.NumeroCasa" class="form-control" type="number" id="f1-casa" name="f1-casa" min="1">
                     </div>
                     <div class="f1-buttons col-md-12 col-sm-12">
                         <button type="button" class="btn btn-previous">
@@ -125,40 +125,40 @@
                 <div class="form-row">
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Persona.PrimerNombre">Primer nombre</label>
-                        <input asp-for="Paciente.Persona.Responsable.Persona.PrimerNombre" type="text" value="text" name="f1-firstname-r" class="f1-first-name form-control" id="f1-first-name">
+                        <input asp-for="Paciente.Persona.Responsable.Persona.PrimerNombre" type="text" name="f1-firstname-r" class="f1-first-name form-control" id="f1-first-name">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Persona.SegundoNombre">Segundo nombre</label>
-                        <input asp-for="Paciente.Persona.Responsable.Persona.SegundoNombre" type="text" value="text" name="f1-secondname-r" class="f1-second-name form-control" id="f1-second-name">
+                        <input asp-for="Paciente.Persona.Responsable.Persona.SegundoNombre" type="text" name="f1-secondname-r" class="f1-second-name form-control" id="f1-second-name">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoPaterno">Primer apellido</label>
-                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoPaterno" type="text" value="text" name="f1-lastname1-r" class="f1-last-name1 form-control" id="f1-last-name1">
+                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoPaterno" type="text" name="f1-lastname1-r" class="f1-last-name1 form-control" id="f1-last-name1">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoMaterno">Segundo apellido</label>
-                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoMaterno" type="text" value="text" name="f1-lastname2-r" class="f1-last-name2 form-control" id="f1-last-name2">
+                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoMaterno" type="text" name="f1-lastname2-r" class="f1-last-name2 form-control" id="f1-last-name2">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoCasada" for="f1-apellido-casada">Apellido de casada</label>
-                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoCasada" type="text" value="text" name="f1-apellido-casada-r" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                        <input asp-for="Paciente.Persona.Responsable.Persona.ApellidoCasada" type="text" name="f1-apellido-casada-r" class="f1-apellido-casada form-control" id="f1-apellido-casada">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Responsables">Fecha de nacimiento</label>
                         <div class="input-group date" data-provide="datepicker">
-                            <input asp-for="Responsables" type="text" class="form-control" value="12-05-1998" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento-r">
+                            <input asp-for="Responsables" type="text" class="form-control" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento-r">
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Telefonos">Telefono</label>
-                        <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" value="78787475" name="f1-tel-r">
+                        <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" name="f1-tel-r">
                     </div>
                     <div class="form-group col-md-6 col-sm-12">
                         <label asp-for="Paciente.Persona.Responsable.Relacion">Relación</label>
-                        <input asp-for="Paciente.Persona.Responsable.Relacion" class="form-control" value="text" type="text" id="f1-relacion" name="f1-relacion">
+                        <input asp-for="Paciente.Persona.Responsable.Relacion" class="form-control" type="text" id="f1-relacion" name="f1-relacion">
                     </div>
                 </div>
                 <div class="f1-buttons  col-md-12 col-sm-12">

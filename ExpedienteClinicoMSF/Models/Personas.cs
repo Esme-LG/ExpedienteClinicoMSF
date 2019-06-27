@@ -29,6 +29,7 @@ namespace ExpedienteClinicoMSF.Models
         public string ApellidoMaterno { get; set; }
         public string ApellidoCasada { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString ="{dd.MM.yyyy}")]
         public DateTime FechaNacimiento { get; set; }
 
         public Familiares Familiar { get; set; }

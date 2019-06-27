@@ -11,46 +11,59 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NumExpediente)
+            Expediente No.
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NumExpediente)
+            @ViewData["nume"]
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.FechaCreacion)
+            Fecha de Registro
         </dt>
         <dd>
             @Html.DisplayFor(model => model.FechaCreacion)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ExpEstado)
+            Nombre Paciente
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ExpEstado)
+            @ViewData["pnombre"] @ViewData["snombre"] @ViewData["papellido"] @ViewData["sapellido"] @ViewData["cnombre"]
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Direccion)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Direccion.Calle)
+            @ViewData["ciudad"] No. @ViewData["casa"] @ViewData["calle"], @ViewData["sregion"], @ViewData["region"], @ViewData["pais"]
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EstadoCivil)
+            Estado Civil
         </dt>
         <dd>
             @Html.DisplayFor(model => model.EstadoCivil.EstadoCivil)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Genero)
+            Genero
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Genero.Genero)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Paciente)
+            Telefono
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.PacienteEmail)
+            @ViewData["tel"]
+        </dd>
+        <h3>Datos Responsable</h3>
+        <dt>
+            Nombre
+        </dt>
+        <dd>
+            @ViewData["pnombrer"] @ViewData["snombrer"] @ViewData["papellidor"] @ViewData["sapellidor"] @ViewData["cnombrer"]
+        </dd>
+        <dt>
+            Telefono
+        </dt>
+        <dd>
+            @ViewData["telr"]
         </dd>
     </dl>
 </div>

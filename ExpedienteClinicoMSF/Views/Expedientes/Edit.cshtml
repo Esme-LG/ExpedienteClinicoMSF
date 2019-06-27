@@ -3,64 +3,212 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
-<h2>Edit</h2>
+@section styles {
+    <link href="@Url.Content("~/css/form-sign-up.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/expediente-register.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
+    <link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css")" rel="stylesheet" />
+}
+<h2>Editar</h2>
 
 <h4>Expedientes</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ExpedienteId" />
-            <div class="form-group">
-                <label asp-for="PacienteId" class="control-label"></label>
-                <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.PacienteId"></select>
-                <span asp-validation-for="PacienteId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EstadoCivilId" class="control-label"></label>
-                <select asp-for="EstadoCivilId" class="form-control" asp-items="ViewBag.EstadoCivilId"></select>
-                <span asp-validation-for="EstadoCivilId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DireccionId" class="control-label"></label>
-                <select asp-for="DireccionId" class="form-control" asp-items="ViewBag.DireccionId"></select>
-                <span asp-validation-for="DireccionId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GeneroId" class="control-label"></label>
-                <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId"></select>
-                <span asp-validation-for="GeneroId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumExpediente" class="control-label"></label>
-                <input asp-for="NumExpediente" class="form-control" />
-                <span asp-validation-for="NumExpediente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaCreacion" class="control-label"></label>
-                <input asp-for="FechaCreacion" class="form-control" />
-                <span asp-validation-for="FechaCreacion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="ExpEstado" /> @Html.DisplayNameFor(model => model.ExpEstado)
-                    </label>
+
+<div class="form-row">
+    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+       <form asp-action="Edit" class="f1" role="form">
+
+            <div class="f1-steps">
+                <div class="f1-progress">
+                    <div class="f1-progress-line" data-now-value="75.00" data-number-of-steps="2" style="width: 25.00%;"></div>
+                </div>
+                <div class="f1-step active">
+                    <div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                    <p>Datos del Paciente</p>
+                </div>
+                <div class="f1-step">
+                    <div class="f1-step-icon"><i class="fas fa-user-shield"></i></div>
+                    <p>Datos del Responsable</p>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            <fieldset>
+
+                <div class="form-row">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ExpedienteId" />
+
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label class="control-label">Numero de Expediente</label>
+                        <input  class="form-control" type="text" name="f1-num-expediente" value="@ViewData["nume"]" disabled/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Primer nombre</label>
+                        <input type="text" name="f1-firstname" class="f1-first-name form-control" value="@ViewData["pnombre"]" id="f1-first-name">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Segundo nombre</label>
+                        <input value="@ViewData["snombre"]" type="text" name="f1-secondname" class="f1-second-name form-control" id="f1-second-name">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Primer apellido</label>
+                        <input value="@ViewData["papellido"]" type="text" name="f1-lastname1" class="f1-last-name1 form-control" id="f1-last-name1">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Segundo apellido</label>
+                        <input value="@ViewData["sapellido"]" type="text" name="f1-lastname2" class="f1-last-name2 form-control" id="f1-last-name2">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label for="f1-apellido-casada">Apellido de casada</label>
+                        <input value="@ViewData["capellido"]" type="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="GeneroId">Género</label>
+                        <select asp-for="GeneroId" value="@ViewData["genero"]" class="form-control" asp-items="ViewBag.GeneroId" name="f1-gen"><option>Seleccione uno</option></select>
+                        <span asp-validation-for="Genero"  class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Fecha de nacimiento</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input asp-for="GeneroId" type="text" value="@ViewData["fnaci"]" class="form-control" id="f1-fecha-nacimiento" name="f1-fecha-nacimiento">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="EstadoCivilId">Estado Civil</label>
+                        <select asp-for="EstadoCivilId" class="form-control" value="@ViewData["estcivil"]" asp-items="ViewBag.EstadoCivilId" name="f1-est-civil"><option value="">Seleccione uno</option></select>
+                        <span asp-validation-for="EstadoCivilId"  class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label>Email</label>
+                        <input  class="form-control" value="@ViewData["email"]" type="text" id="f1-email" name="f1-email">
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Telefonos">Telefono</label>
+                        <input  value="@ViewData["tel"]" class="form-control" type="tel" id="f1-tel" name="f1-tel">
+                        <span asp-validation-for="Telefonos" class="text-danger"></span>
+                    </div>
+                </div>
+                <h3>Dirección:</h3>
+                <div class="form-row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion.PaisId">Pais</label>
+                        <select asp-for="Direccion.PaisId" class="form-control" value="@ViewData["pais"]" asp-items="ViewBag.PaisId" name="f1-pais"><option value="">Seleccione uno</option></select>
+                        <span asp-validation-for="Direccion.PaisId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion.Ubicaciones">Region</label>
+                        <select asp-for="Direccion" class="form-control" value="@ViewData["region"]" name="f1-region" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion">Sub region</label>
+                        <select class="form-control" name="f1-subregion" value="@ViewData["sregion"]" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion.Ciudad">Ciudad</label>
+                        <input class="form-control" value="@ViewData["ciudad"]" type="text" id="f1-ciudad" name="f1-ciudad">
+                        <span asp-validation-for="Direccion.Ciudad"  class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion.Calle">Calle</label>
+                        <input value="@ViewData["calle"]" class="form-control" type="text" id="f1-calle" name="f1-calle">
+                        <span asp-validation-for="Direccion.Calle" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Direccion.NumeroCasa">Numero de casa</label>
+                        <input value="@ViewData["casa"]" class="form-control" type="number" id="f1-casa" name="f1-casa" min="1">
+                        <span asp-validation-for="Direccion.NumeroCasa" class="text-danger"></span>
+                    </div>
+                    <div class="f1-buttons col-md-12 col-sm-12">
+                        <button type="button" class="btn btn-previous">
+                            <a asp-action="Index" style="color:white;">Back to List</a>
+                        </button>
+                        <button type="button" class="btn btn-next">Next</button>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Persona.PrimerNombre">Primer nombre</label>
+                        <input type="text" value="@ViewData["pnombrer"]" name="f1-firstname-r" class="f1-first-name form-control" id="f1-first-name">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Persona.PrimerNombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Persona.SegundoNombre">Segundo nombre</label>
+                        <input value="@ViewData["snombrer"]" type="text" name="f1-secondname-r" class="f1-second-name form-control" id="f1-second-name">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Persona.SegundoNombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoPaterno">Primer apellido</label>
+                        <input value="@ViewData["papellidor"];" type="text" name="f1-lastname1-r" class="f1-last-name1 form-control" id="f1-last-name1">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Persona.ApellidoPaterno" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoMaterno">Segundo apellido</label>
+                        <input value="@ViewData["sapellidor"]" type="text" name="f1-lastname2-r" class="f1-last-name2 form-control" id="f1-last-name2">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Persona.ApellidoMaterno" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Persona.ApellidoCasada" for="f1-apellido-casada">Apellido de casada</label>
+                        <input value="@ViewData["capellidor"]" type="text" name="f1-apellido-casada-r" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Persona.ApellidoCasada" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Responsables">Fecha de nacimiento</label>
+                        <div class="input-group date" data-provide="datepicker">
+                            <input value="@ViewData["fnacir"]" type="text" class="form-control" id="f1-fecha-nacimiento-r" name="f1-fecha-nacimiento-r">
+                            <div class="input-group-addon">
+                                <span class="glyphicon glyphicon-th"></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Responsables" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Telefonos">Telefono</label>
+                        <input class="form-control" type="tel" id="f1-tel" value="@ViewData["telr"]" name="f1-tel-r">
+                        <span asp-validation-for="Telefonos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <label asp-for="Paciente.Persona.Responsable.Relacion">Relación</label>
+                        <input class="form-control" value="@ViewData["rela"]" type="text" id="f1-relacion" name="f1-relacion">
+                        <span asp-validation-for="Paciente.Persona.Responsable.Relacion" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="f1-buttons  col-md-12 col-sm-12">
+                    <button type="button" class="btn btn-previous">Previous</button>
+                    <input type="submit" class="btn btn-submit" value="Actualizar">
+                </div>
+            </fieldset>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
+    <script src="~/js/sign-up.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                minView: 2,
+                format: 'dd-mm-yyyy HH:ii p',
+                startDate: new Date,
+                autoclose: true,
+            });
+        })
+    </script>
 }

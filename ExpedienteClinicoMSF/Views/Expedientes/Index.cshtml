@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.NumExpediente)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Paciente.PersonaId)
+                @Html.DisplayFor(modelItem => item.Paciente.Persona.PrimerNombre) @Html.DisplayFor(modelItem => item.Paciente.Persona.SegundoNombre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Paciente)
+                @Html.DisplayFor(modelItem => item.Paciente.Persona.ApellidoPaterno) @Html.DisplayFor(modelItem => item.Paciente.Persona.ApellidoMaterno)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ExpEstado)
@@ -50,7 +50,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ExpedienteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ExpedienteId">Details</a> |
+                <a asp-action="Details" asp-route-id="@item.ExpedienteId">Details</a>
             </td>
         </tr>
 }
