@@ -74,3 +74,22 @@ button.btn.btn-submit:active:focus, button.btn.btn-submit.active:focus { backgro
 button.btn.btn-previous,
 button.btn.btn-previous:focus,
 button.btn.btn-previous:active:focus, button.btn.btn-previous.active:focus { background: #bbb; }
+.form-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px
+}
+
+.form-row > .col, .form-row > [class*=col-] {
+        padding-right: 5px;
+        padding-left: 5px
+    }
+
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem
+}

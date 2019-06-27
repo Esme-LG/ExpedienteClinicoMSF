@@ -41,35 +41,35 @@
                 <h4></h4>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.PrimerNombre">Primer nombre</label>
-                    <input asp-for="Persona.PrimerNombre" type="text" name="f1-first-name" class="f1-first-name form-control" id="f1-first-name">
+                    <input asp-for="Persona.PrimerNombre" type="text" name="f1firstname" class="f1-first-name form-control" id="f1-first-name">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.SegundoNombre">Segundo nombre</label>
-                    <input asp-for="Persona.SegundoNombre" type="text" name="f1-second-name" class="f1-second-name form-control" id="f1-second-name">
+                    <input asp-for="Persona.SegundoNombre" type="text" name="f1secondname" class="f1-second-name form-control" id="f1-second-name">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.ApellidoPaterno">Primer apellido</label>
-                    <input asp-for="Persona.ApellidoPaterno" type="text" name="f1-last-name1" class="f1-last-name1 form-control" id="f1-last-name1">
+                    <input asp-for="Persona.ApellidoPaterno" type="text" name="f1lastname1" class="f1-last-name1 form-control" id="f1-last-name1">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.ApellidoMaterno">Segundo apellido</label>
-                    <input asp-for="Persona.ApellidoMaterno" type="text" name="f1-last-name2" class="f1-last-name2 form-control" id="f1-last-name2">
+                    <input asp-for="Persona.ApellidoMaterno" type="text" name="f1lastname2" class="f1-last-name2 form-control" id="f1-last-name2">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.ApellidoCasada" for="f1-apellido-casada">Apellido de casada</label>
-                    <input asp-for="Persona.ApellidoCasada" type="text" name="f1-apellido-casada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
+                    <input asp-for="Persona.ApellidoCasada" type="text" name="f1apellidocasada" class="f1-apellido-casada form-control" id="f1-apellido-casada">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Telefonos">Telefono</label>
-                    <input asp-for="Telefonos" class="form-control" type="tel" id="f1-tel" name="f1-tel">
+                    <input asp-for="Telefonos" class="form-control" type="tel" id="f1tel" name="f1-tel">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="GeneroId">Género</label>
-                    <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="GeneroId" class="form-control" asp-items="ViewBag.GeneroId" name="f1-gen"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="EstadoCivilId">Estado Civil</label>
-                    <select asp-for="EstadoCivilId" class="form-control" asp-items="ViewBag.EstadoCivilId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="EstadoCivilId" class="form-control" asp-items="ViewBag.EstadoCivilId" name="f1-est-civil"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Persona.FechaNacimiento">Fecha de nacimiento</label>
@@ -82,16 +82,16 @@
                 </div>
                 <div><h3>Direccion</h3></div>
                 <div class="form-group col-md-6 col-sm-12">
-                    <label  asp-for="Direccion.Pais.PaisId">Pais</label>
-                    <select asp-for="Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId"><option value="">Seleccione uno</option></select>
+                    <label asp-for="Direccion.Pais.PaisId">Pais</label>
+                    <select asp-for="Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId" name="f1-pais"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Direccion">Region</label>
-                    <select asp-for="Direccion" class="form-control" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="Direccion" class="form-control" name="f1-region" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Direccion">Sub region</label>
-                    <select asp-for="Direccion" class="form-control" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="Direccion" class="form-control" name="f1-subRegion" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Direccion.Ciudad">Ciudad</label>
@@ -138,35 +138,35 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.DuracionPromConsulta">Duracion de consulta</label>
-                    <select asp-for="Hospital.DuracionPromConsulta" class="form-control">
-                        <option value="5 min">5 min</option>                    
-                        <option value="10 min">10 min</option>
-                        <option value="15 min">15 min</option>
-                        <option value="30 min">30 min</option>
-                        <option value="45 min">45 min</option>
-                        <option value="60 min">6015 min</option>
+                    <select asp-for="Hospital.DuracionPromConsulta" class="form-control" name="f1-dur-consulta">
+                        <option value="5">5 min.</option>
+                        <option value="10">10 min.</option>
+                        <option value="15">15 min.</option>
+                        <option value="30">30 min.</option>
+                        <option value="45">45 min.</option>
+                        <option value="60">60 min.</option>
                     </select>
                 </div>
                 <div><h3>Direccion</h3></div>
                 <div class="form-group col-md-6 col-sm-12">
-                    <label asp-for="Hospital.Direccion.Pais.PaisId">Duracion de consulta</label>
-                    <select asp-for="Hospital.Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId"><option value="">Seleccione uno</option></select>
+                    <label asp-for="Hospital.Direccion.Pais.PaisId">Pais</label>
+                    <select asp-for="Hospital.Direccion.Pais.PaisId" class="form-control" asp-items="ViewBag.PaisId" name="f1-pais-h"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.Direccion">Region</label>
-                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.RegionId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.RegionId" name="f1-region-h"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.Direccion">Sub region</label>
-                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.SubRegionId"><option value="">Seleccione uno</option></select>
+                    <select asp-for="Hospital.Direccion" class="form-control" asp-items="ViewBag.SubRegionId" name="f1-subregion-h"><option value="">Seleccione uno</option></select>
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.Direccion.Ciudad">Ciudad</label>
-                    <input asp-for="Hospital.Direccion.Ciudad" class="form-control" type="text" id="f1-ciudad-h" name="f1-ciudad-h">
+                    <input asp-for="Hospital.Direccion.Ciudad" value="cd " class="form-control" type="text" id="f1-ciudad-h" name="f1-ciudad-h">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.Direccion.Calle">Calle</label>
-                    <input asp-for="Hospital.Direccion.Calle" class="form-control" type="text" id="f1-calle-h" name="f1-calle-h">
+                    <input asp-for="Hospital.Direccion.Calle" value="des" class="form-control" type="text" id="f1-calle-h" name="f1-calle-h">
                 </div>
                 <div class="form-group col-md-6 col-sm-12">
                     <label asp-for="Hospital.Direccion.NumeroCasa">Numero de casa</label>

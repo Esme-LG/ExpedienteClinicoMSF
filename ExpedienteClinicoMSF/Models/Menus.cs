@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -13,7 +14,10 @@ namespace ExpedienteClinicoMSF.Models
 
         public int MenuId { get; set; }
         public int? MenMenuId { get; set; }
+        [Required]
+        [MaxLength(25)]
         public string Opcion { get; set; }
+        [MaxLength(100)]
         public string Direccion { get; set; }
 
         public Menus MenMenu { get; set; }

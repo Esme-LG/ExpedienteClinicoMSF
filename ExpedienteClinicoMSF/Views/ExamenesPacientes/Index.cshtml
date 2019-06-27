@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ExpedienteClinicoMSF.Models.ExamenesPacientes>
+
+@{
+    ViewData["Title"] = "Exámenes pacientes";
+}
+
+<h2>Pacientes</h2>
+
+<p>
+    <a asp-action="Create">Agregar</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Consulta.Paciente.Persona.PrimerNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consulta.Paciente.Persona.ApellidoPaterno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Examen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRealizacion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consulta.Paciente.Persona.PrimerNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consulta.Paciente.Persona.ApellidoPaterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Examen.Examen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRealizacion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ExamenPacienteId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.ExamenPacienteId">Detalles</a> |
+                <a asp-action="Delete" asp-route-id="@item.ExamenPacienteId">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -13,10 +14,12 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int ExamenId { get; set; }
+        [Display(Name = "Categoría")]
         public int CategoriaId { get; set; }
         public string Examen { get; set; }
+        [Display(Name = "Descripción")]
         public string DescripcionExamen { get; set; }
-
+        
         public Categoria Categoria { get; set; }
         public ICollection<ExamenesMultimedias> ExamenesMultimedias { get; set; }
         public ICollection<ExamenesPacientes> ExamenesPacientes { get; set; }
