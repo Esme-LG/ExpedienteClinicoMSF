@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Expediente Clínico MSF</title>
 
+   
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -32,19 +33,46 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+
 
                     @if (User.Identity.IsAuthenticated)
                     {
+
+
+
                         @if (User.IsInRole("Administrador"))
                         {
-                            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>}
+                            <li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
+                            
+                            <li><a asp-area="" asp-controller="EstadosCiviles" asp-action="Index">Estados Civiles</a></li>
+                            <li><a asp-area="" asp-controller="Especialidades" asp-action="Index">Especialidades</a></li>
+                            <li><a asp-area="" asp-controller="Permisos" asp-action="Index">Permisos</a></li>
+                            <li><a asp-area="" asp-controller="Regiones" asp-action="Index">Regiones</a></li>
+                            <li><a asp-area="" asp-controller="CodigosCie10" asp-action="Index">Codigos</a></li>
 
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+
+                        }
+
+
                         @if (User.IsInRole("Doctor"))
-                        { <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>}
+                        {
+                            
+                            <li><a asp-area="" asp-controller="ConsultasMedicas" asp-action="Index">Consultas Medicas</a></li>
+                            <li><a asp-area="" asp-controller="HistorialClinico" asp-action="Index">Historial Clinico</a></li>
+                        }
 
-                            <li><a asp-area="" asp-controller="Roles" asp-action="Index">ROLES</a></li>
+
+                        @if (User.IsInRole("Enfermera"))
+                        {
+
+                            <li><a asp-area="" asp-controller="ConsultasMedicas" asp-action="Index">Consultas Medicas</a></li>
+                            <li><a asp-area="" asp-controller="HistorialClinico" asp-action="Index">Historial Clinico</a></li>
+                        }
+
+
+
+
                     }
 
 
@@ -56,13 +84,13 @@
 
                     }
 
-
                     @if (User.Identity.IsAuthenticated)
                     {
 
                         <li><a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
-
+                 
                     }
+
 
                 </ul>
             </div>

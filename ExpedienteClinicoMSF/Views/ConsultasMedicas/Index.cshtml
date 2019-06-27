@@ -4,17 +4,20 @@
     ViewData["Title"] = "Index";
 
 }
-    @section styles {
-        <link href="@Url.Content("~/css/form-sign-up.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/css/sign-up.css")" rel="stylesheet" />
-        <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
-        <link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css")" rel="stylesheet" />
- }
-    <h2>Index</h2>
-
+@section styles {
+    <link href="@Url.Content("~/css/form-sign-up.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/sign-up.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/lib/font-awesome/css/all.css")" rel="stylesheet" />
+    <link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css")" rel="stylesheet" />
+}
+<h2>Index</h2>
+@if (User.IsInRole("Enfermera"))
+{
     <p>
         <a asp-action="Create">Create New</a>
     </p>
+}
+
     <table class="table">
         <thead>
             <tr>
@@ -36,16 +39,22 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Paciente)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SignoVital)
-                </th>
-                <th>Examenes Consulta </th>
-                <th>Diagnostico</th>
-                <th>Tratamiento</th>
-                <th></th>
-                    
-               
-            </tr>
+                @if (User.IsInRole("Enfermera"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.SignoVital)
+                    </th>}
+
+                    <th>Examenes Consulta </th>
+                    @if (User.IsInRole("Doctor"))
+                    {
+                        <th>Diagnostico</th>
+                        <th>Tratamiento</th>
+                    }
+                    <th></th>
+
+
+                </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
@@ -69,27 +78,44 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Paciente.PacienteEmail)
                 </td>
-                <td>
-                    <a asp-area="" asp-controller="SignosVitales" asp-action="Edit" asp-route-id="@item.SignoVital.SignoVitalId">Signos Vitales</a>
+                @if (User.IsInRole("Enfermera"))
+                {
+                    <td>
+                        <a asp-area="" asp-controller="SignosVitales" asp-action="Edit" asp-route-id="@item.SignoVital.SignoVitalId">Signos Vitales</a>
 
-                </td>
+                    </td>
+                }
+                    <td>
+                        <a asp-area="" asp-controller="ExamenesPacientes" asp-action="Create" asp-route-id="@item.ConsultaId">Examenes </a>
+                    </td>
+                    @if (User.IsInRole("Doctor"))
+                    {
+                        <td>
+                            <a asp-area="" asp-controller="Diagnosticos" asp-action="Create" asp-route-id="@item.ConsultaId">Diagnostico </a>
+                        </td>
+                        <td>
+                            <a asp-area="" asp-controller="Tratamientos" asp-action="Create" asp-route-id="@item.ConsultaId">Tratamiento </a>
+                        </td>
+                    }
+                        <td>
+                            @if (User.IsInRole("Enfermera"))
+                            {
 
-                <td>
-                    <a asp-area="" asp-controller="ExamenesPacientes" asp-action="Create" asp-route-id="@item.ConsultaId">Examenes </a>
-                </td>
-                <td>
-                    <a asp-area="" asp-controller="Diagnosticos" asp-action="Create" asp-route-id="@item.ConsultaId">Diagnostico </a>
-                </td>
-                <td>
-                    <a asp-area="" asp-controller="Tratamientos" asp-action="Create" asp-route-id="@item.ConsultaId">Tratamiento </a>
-                </td>
+                                <a asp-action="Edit" asp-route-id="@item.ConsultaId">Edit</a>}|
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ConsultaId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ConsultaId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ConsultaId">Delete</a>
-                </td>
-            </tr>
+                            <a asp-action="Details" asp-route-id="@item.ConsultaId">Details</a>|
+
+                            @if (User.IsInRole("Enfermera"))
+                            {
+
+                                <a asp-action="Delete" asp-route-id="@item.ConsultaId">Delete</a>
+
+                            }
+
+
+
+                        </td>
+                </tr>
             }
         </tbody>
     </table>
