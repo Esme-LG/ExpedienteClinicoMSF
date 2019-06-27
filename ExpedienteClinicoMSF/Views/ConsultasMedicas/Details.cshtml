@@ -50,11 +50,15 @@
             @Html.DisplayNameFor(model => model.SignoVital)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.SignoVital.SignoVitalId)
+            <a asp-action="SignosVitales" asp-route-id= "@Model.SignoVitalId">Edit</a> |
+
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.ConsultaId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+
+
+    
 </div>

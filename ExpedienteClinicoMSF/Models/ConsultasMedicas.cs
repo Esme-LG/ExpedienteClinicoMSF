@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -19,6 +20,7 @@ namespace ExpedienteClinicoMSF.Models
         public string TipoReserva { get; set; }
         public DateTime FechaReserva { get; set; }
         public DateTime FechaConsulta { get; set; }
+        [Required]
         public string Sintomas { get; set; }
 
         public Medicos Medico { get; set; }

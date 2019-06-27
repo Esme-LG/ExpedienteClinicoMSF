@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ExpedienteClinicoMSF.Models.Tratamientos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<a asp-area="" asp-controller="ConsultasMedicas" asp-action="Index">Consultas Medicas</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Frecuencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Durante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consulta)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Frecuencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Durante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Consulta.Sintomas)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TratamientoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TratamientoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TratamientoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
