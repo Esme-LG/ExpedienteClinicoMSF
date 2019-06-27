@@ -1,0 +1,57 @@
+﻿@model ExpedienteClinicoMSF.Models.SignosVitales
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SignosVitales</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Temperatura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Temperatura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pulso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pulso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FrecRespiratoria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FrecRespiratoria)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PresionArterial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PresionArterial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Peso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Peso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Estatura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Estatura)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SignoVitalId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

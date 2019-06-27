@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -15,6 +16,8 @@ namespace ExpedienteClinicoMSF.Models
 
         public int PacienteId { get; set; }
         public int PersonaId { get; set; }
+        [Required]
+       // [Index(IsUnique=true)]
         public string PacienteEmail { get; set; }
 
         public Personas Persona { get; set; }

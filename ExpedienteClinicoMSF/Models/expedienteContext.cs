@@ -63,8 +63,8 @@ namespace ExpedienteClinicoMSF.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-TT8A6JE\\SQLEXPRESS;Initial Catalog=expediente;Integrated Security=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-INN4EME\\SQLEXPRESS;Initial Catalog=expediente;Integrated Security=True;");
             }
         }
 
@@ -269,7 +269,7 @@ namespace ExpedienteClinicoMSF.Models
                 entity.ToTable("CODIGOS_CIE10");
 
                 entity.HasIndex(e => e.Cie10)
-                    .HasName("UQ__CODIGOS___A6999B41950B0424")
+                    .HasName("UQ__CODIGOS___A6999B4123E8FC70")
                     .IsUnique();
 
                 entity.Property(e => e.CodigoId).HasColumnName("CODIGO_ID");
@@ -588,21 +588,30 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.ExamenId)
                     .HasName("_TIENE_FK");
 
+                entity.HasIndex(e => e.ExamenPacienteId)
+                    .HasName("RESULTADOS_FK");
+
                 entity.Property(e => e.ExamenResultadoId).HasColumnName("EXAMEN_RESULTADO_ID");
 
                 entity.Property(e => e.ExamenId).HasColumnName("EXAMEN_ID");
 
+                entity.Property(e => e.ExamenPacienteId).HasColumnName("EXAMEN_PACIENTE_ID");
+
                 entity.Property(e => e.Medida)
                     .IsRequired()
                     .HasColumnName("MEDIDA")
-                    .HasMaxLength(10)
+                    .HasMaxLength(15)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Resultado)
                     .IsRequired()
                     .HasColumnName("RESULTADO")
-                    .HasMaxLength(25)
+                    .HasMaxLength(30)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Valor)
+                    .HasColumnName("VALOR")
+                    .HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.ValorMax)
                     .HasColumnName("VALOR_MAX")
@@ -617,6 +626,11 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.ExamenId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_EXAMENES__TIENE_EXAMENES");
+
+                entity.HasOne(d => d.ExamenPaciente)
+                    .WithMany(p => p.ExamenesResultados)
+                    .HasForeignKey(d => d.ExamenPacienteId)
+                    .HasConstraintName("FK_EXAMENES_RESULTADO_EXAMENES");
             });
 
             modelBuilder.Entity<Expedientes>(entity =>
@@ -636,7 +650,7 @@ namespace ExpedienteClinicoMSF.Models
                     .HasName("ES___FK");
 
                 entity.HasIndex(e => e.NumExpediente)
-                    .HasName("UQ__EXPEDIEN__5E02FDBF425C735D")
+                    .HasName("UQ__EXPEDIEN__5E02FDBFA4826A64")
                     .IsUnique();
 
                 entity.HasIndex(e => e.PacienteId)
@@ -699,6 +713,9 @@ namespace ExpedienteClinicoMSF.Models
                 entity.HasIndex(e => e.DireccionId)
                     .HasName("VIVE_EN_FK");
 
+                entity.HasIndex(e => e.ExpedienteId)
+                    .HasName("_TIENE__FK");
+
                 entity.HasIndex(e => e.GeneroId)
                     .HasName("ES____FK");
 
@@ -717,6 +734,8 @@ namespace ExpedienteClinicoMSF.Models
 
                 entity.Property(e => e.DireccionId).HasColumnName("DIRECCION_ID");
 
+                entity.Property(e => e.ExpedienteId).HasColumnName("EXPEDIENTE_ID");
+
                 entity.Property(e => e.FechaMuerte)
                     .HasColumnName("FECHA_MUERTE")
                     .HasColumnType("datetime");
@@ -732,6 +751,11 @@ namespace ExpedienteClinicoMSF.Models
                     .HasForeignKey(d => d.DireccionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FAMILIAR_VIVE_EN_DIRECCIO");
+
+                entity.HasOne(d => d.Expediente)
+                    .WithMany(p => p.Familiares)
+                    .HasForeignKey(d => d.ExpedienteId)
+                    .HasConstraintName("FK_FAMILIAR__TIENE__EXPEDIEN");
 
                 entity.HasOne(d => d.Genero)
                     .WithMany(p => p.Familiares)
@@ -961,7 +985,7 @@ namespace ExpedienteClinicoMSF.Models
                     .HasName("TIENE__FK");
 
                 entity.HasIndex(e => e.NumMedico)
-                    .HasName("UQ__MEDICOS__B1D83B471BB4A1CD")
+                    .HasName("UQ__MEDICOS__B1D83B47883034F3")
                     .IsUnique();
 
                 entity.Property(e => e.MedicoId).HasColumnName("MEDICO_ID");
@@ -1072,7 +1096,7 @@ namespace ExpedienteClinicoMSF.Models
                 entity.ToTable("PACIENTES");
 
                 entity.HasIndex(e => e.PacienteEmail)
-                    .HasName("UQ__PACIENTE__B3D5C67BAF858AC4")
+                    .HasName("UQ__PACIENTE__B3D5C67B7F145DB7")
                     .IsUnique();
 
                 entity.HasIndex(e => e.PersonaId)
@@ -1612,7 +1636,7 @@ namespace ExpedienteClinicoMSF.Models
                     .HasName("VIVE_EN__FK");
 
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__USUARIOS__161CF724A17D8CFA")
+                    .HasName("UQ__USUARIOS__161CF724A4AD0AB7")
                     .IsUnique();
 
                 entity.HasIndex(e => e.EstadoCivilId)
@@ -1704,8 +1728,6 @@ namespace ExpedienteClinicoMSF.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_USUARIOS_TIENE_ROLES");
             });
-
-
         }
     }
 }

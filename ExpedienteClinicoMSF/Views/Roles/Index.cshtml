@@ -43,7 +43,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RolId"><i class="glyphicon glyphicon-pencil"></i></a> |
-                <a asp-action="Details" asp-route-id="@item.RolId"><i class="glyphicon glyphicon-eye-open"></i></a> |
+                @if (User.IsInRole("Administrador")) {<a asp-action="Details" asp-route-id="@item.RolId"><i class="glyphicon glyphicon-eye-open"></i></a>} |
                 <a asp-action="Delete" asp-route-id="@item.RolId"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>

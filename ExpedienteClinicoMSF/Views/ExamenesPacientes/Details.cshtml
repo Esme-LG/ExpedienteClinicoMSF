@@ -1,0 +1,68 @@
+﻿@model ExpedienteClinicoMSF.Models.ExamenesPacientes
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExamenesPacientes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRealizacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRealizacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaLectura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaLectura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lectura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lectura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Consulta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Consulta.Sintomas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Examen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Examen.Examen)
+        </dd>
+    </dl>
+
+    <div>
+        <h4>Resultados</h4>
+
+        <table class="table">
+            <tbody>
+                @foreach (var item in Model.ExamenesResultados)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Resultado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Valor) @Html.DisplayFor(modelItem => item.Medida)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ExamenPacienteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

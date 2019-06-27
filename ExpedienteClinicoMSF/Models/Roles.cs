@@ -17,7 +17,7 @@ namespace ExpedienteClinicoMSF.Models
         public int RolId { get; set; }
         [Display(Name = "Rol")]
         [Required]
-        [MaxLength(20, ErrorMessage = "El nombre es demasiado largo, solo se permiten 20 caracteres")]
+        [MaxLength(25, ErrorMessage = "El nombre es demasiado largo, solo se permiten 25 caracteres")]
         public string Rol { get; set; }
         [Display(Name = "Descripcion del Rol")]
         [Required]

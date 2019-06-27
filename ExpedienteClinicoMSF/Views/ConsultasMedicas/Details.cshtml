@@ -1,0 +1,64 @@
+﻿@model ExpedienteClinicoMSF.Models.ConsultasMedicas
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ConsultasMedicas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoReserva)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoReserva)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaReserva)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaReserva)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaConsulta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaConsulta)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sintomas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sintomas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.NumMedico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paciente.PacienteEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SignoVital)
+        </dt>
+        <dd>
+            <a asp-action="SignosVitales" asp-route-id= "@Model.SignoVitalId">Edit</a> |
+
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ConsultaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+
+
+    
+</div>

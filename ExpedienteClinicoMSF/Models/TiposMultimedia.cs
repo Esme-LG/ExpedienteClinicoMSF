@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -12,6 +13,7 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int TipoMultimediaId { get; set; }
+        [Display(Name = "Tipos de multimedia")]
         public string TipoMultimedia { get; set; }
 
         public ICollection<ExamenesMultimedias> ExamenesMultimedias { get; set; }

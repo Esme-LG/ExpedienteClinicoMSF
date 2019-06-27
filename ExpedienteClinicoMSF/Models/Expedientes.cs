@@ -8,6 +8,7 @@ namespace ExpedienteClinicoMSF.Models
         public Expedientes()
         {
             Antecedentes = new HashSet<Antecedentes>();
+            Familiares = new HashSet<Familiares>();
             Responsables = new HashSet<Responsables>();
             Telefonos = new HashSet<Telefonos>();
         }
@@ -26,6 +27,7 @@ namespace ExpedienteClinicoMSF.Models
         public Generos Genero { get; set; }
         public Pacientes Paciente { get; set; }
         public ICollection<Antecedentes> Antecedentes { get; set; }
+        public ICollection<Familiares> Familiares { get; set; }
         public ICollection<Responsables> Responsables { get; set; }
         public ICollection<Telefonos> Telefonos { get; set; }
     }

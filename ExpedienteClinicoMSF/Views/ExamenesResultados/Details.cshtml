@@ -1,0 +1,60 @@
+﻿@model ExpedienteClinicoMSF.Models.ExamenesResultados
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExamenesResultados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Resultado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Resultado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorMin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorMin)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorMax)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorMax)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Examen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Examen.DescripcionExamen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamenPaciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExamenPaciente.ExamenPacienteId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ExamenResultadoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

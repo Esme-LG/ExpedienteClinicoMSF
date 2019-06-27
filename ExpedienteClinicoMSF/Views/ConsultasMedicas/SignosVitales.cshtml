@@ -1,0 +1,65 @@
+﻿
+@model ExpedienteClinicoMSF.Models.SignosVitales
+@{
+    ViewData["Title"] = "SignosVitales";
+}
+<h2>SignosVitales</h2>
+<h4>SignosVitales</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SignosVitales">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-action="Index" />
+
+
+
+            <div class="form-group">
+                <label asp-for="Temperatura" class="control-label"></label>
+                <input asp-for="Temperatura" class="form-control" />
+                <span asp-validation-for="Temperatura" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pulso" class="control-label"></label>
+                <input asp-for="Pulso" class="form-control" />
+                <span asp-validation-for="Pulso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrecRespiratoria" class="control-label"></label>
+                <input asp-for="FrecRespiratoria" class="form-control" />
+                <span asp-validation-for="FrecRespiratoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PresionArterial" class="control-label"></label>
+                <input asp-for="PresionArterial" class="form-control" />
+                <span asp-validation-for="PresionArterial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Peso" class="control-label"></label>
+                <input asp-for="Peso" class="form-control" />
+                <span asp-validation-for="Peso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Estatura" class="control-label"></label>
+                <input asp-for="Estatura" class="form-control" />
+                <span asp-validation-for="Estatura" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
