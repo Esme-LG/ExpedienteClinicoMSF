@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExpedienteClinicoMSF.Models
 {
@@ -12,9 +13,13 @@ namespace ExpedienteClinicoMSF.Models
         }
 
         public int ExamenPacienteId { get; set; }
+        [Display(Name = "Examen")]
         public int ExamenId { get; set; }
+        [Display(Name = "Consulta")]
         public int ConsultaId { get; set; }
+        [Display(Name = "Fecha de realización")]
         public DateTime FechaRealizacion { get; set; }
+        [Display(Name = "Fecha de lectura")]
         public DateTime? FechaLectura { get; set; }
         public string Lectura { get; set; }
 

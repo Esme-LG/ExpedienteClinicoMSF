@@ -1,0 +1,51 @@
+﻿@model ExpedienteClinicoMSF.Models.ExamenesPacientes
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ExamenesPacientes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRealizacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRealizacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaLectura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaLectura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Lectura)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Lectura)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Consulta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Consulta.Sintomas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Examen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Examen.DescripcionExamen)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ExamenPacienteId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -50,7 +50,7 @@ namespace ExpedienteClinicoMSF.Controllers
         public IActionResult Create()
         {
             ViewData["CategoriaId"] = new SelectList(_context.Categoria, "CategoriaId", "Categoria1");
-            ViewData["TipoMultimediaId"] = new SelectList(_context.TiposMultimedia, "TipoMultimediaId", "TipoMultimedia")
+            ViewData["TipoMultimediaId"] = new SelectList(_context.TiposMultimedia, "TipoMultimediaId", "TipoMultimedia");
             return View();
         }
 
