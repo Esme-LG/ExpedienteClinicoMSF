@@ -42,10 +42,8 @@ namespace ExpedienteClinicoMSF.Models
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@LoginEmail", user.Email);
-
-                string PassHash=HomeController.EncryptPassword(user.Pass);
-                cmd.Parameters.AddWithValue("@LoginPassword", PassHash);
-                //cmd.Parameters.AddWithValue("@LoginPassword", user.Pass);
+                //cmd.Parameters.AddWithValue("@LoginPassword", HomeController.EncryptPassword(user.Pass));
+                cmd.Parameters.AddWithValue("@LoginPassword", user.Pass);
 
                 con.Open();
                 string result = cmd.ExecuteScalar().ToString();

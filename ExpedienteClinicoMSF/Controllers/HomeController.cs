@@ -9,14 +9,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpedienteClinicoMSF.Controllers
 {
     public class HomeController : Controller
     {
         private readonly expedienteContext _context;
+        UserDataAccessLayer objUser = new UserDataAccessLayer();
+
+        RolUser objUser2 = new RolUser();
 
         public HomeController(expedienteContext context)
         {
@@ -25,16 +32,20 @@ namespace ExpedienteClinicoMSF.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
+            ViewBag.name = objUser2.RoleUsers("fer@gmail.com");
 
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -42,10 +53,13 @@ namespace ExpedienteClinicoMSF.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Doctor")]
         public IActionResult Privacy()
         {
             return View();
         }
+
+
 
         // GET: SignUp
         public IActionResult SignUp()
