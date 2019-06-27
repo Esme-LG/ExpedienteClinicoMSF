@@ -40,10 +40,9 @@
 
 
 
-                        @if (User.IsInRole("Administrador"))
+                        @if (User.IsInRole("AdministradorHospital"))
                         {
                             <li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
-                            
                             <li><a asp-area="" asp-controller="EstadosCiviles" asp-action="Index">Estados Civiles</a></li>
                             <li><a asp-area="" asp-controller="Especialidades" asp-action="Index">Especialidades</a></li>
                             <li><a asp-area="" asp-controller="Permisos" asp-action="Index">Permisos</a></li>
@@ -57,7 +56,7 @@
 
                         @if (User.IsInRole("Doctor"))
                         {
-                            
+
                             <li><a asp-area="" asp-controller="ConsultasMedicas" asp-action="Index">Consultas Medicas</a></li>
                             <li><a asp-area="" asp-controller="HistorialClinico" asp-action="Index">Historial Clinico</a></li>
                         }
@@ -70,29 +69,41 @@
                             <li><a asp-area="" asp-controller="HistorialClinico" asp-action="Index">Historial Clinico</a></li>
                         }
 
+                        @if (User.IsInRole("AdministradorSistema"))
+                        {
+
+                            <li><a asp-area="" asp-controller="Examenes" asp-action="Index">Consultas Medicas</a></li>
+                            <li><a asp-area="" asp-controller="ExamenesResultados" asp-action="Index">Historial Clinico</a></li>
+                        }
+
+
+                        @if (User.IsInRole("Laboratorista"))
+                            {
+
+                            }
 
 
 
-                    }
+                        }
 
 
-                    @if (!User.Identity.IsAuthenticated)
+                        @if (!User.Identity.IsAuthenticated)
 
-                    {
-                        <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Registro</a></li>
-                        <li><a asp-area="" asp-controller="Login" asp-action="UserLogin">Login</a></li>
+                        {
+                            <li><a asp-area="" asp-controller="Home" asp-action="SignUp">Registro</a></li>
+                            <li><a asp-area="" asp-controller="Login" asp-action="UserLogin">Login</a></li>
 
-                    }
+                        }
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                        @if (User.Identity.IsAuthenticated)
+                        {
 
-                        <li><a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
-                 
-                    }
+                            <li><a asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
+
+                        }
 
 
-                </ul>
+                    </ul>
             </div>
         </div>
     </nav>
